@@ -18,6 +18,8 @@ export default function Recipe(recipe) {
     case 4:
       kosten = '€€€€'
       break
+    default:
+      kosten = '€'
   }
 
   return (
