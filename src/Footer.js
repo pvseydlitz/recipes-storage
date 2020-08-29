@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { NavLink } from 'react-router-dom'
 
 import homeIcon from './icons/home.svg'
 import addIcon from './icons/add.svg'
@@ -7,8 +8,12 @@ import addIcon from './icons/add.svg'
 export default function Footer() {
   return (
     <Wrapper>
-      <Icon src={homeIcon} alt=""></Icon>
-      <Icon src={addIcon} alt=""></Icon>
+      <NavLink to="/">
+        <Icon src={homeIcon} alt=""></Icon>
+      </NavLink>
+      <NavLink to="/upload">
+        <Icon src={addIcon} alt=""></Icon>
+      </NavLink>
     </Wrapper>
   )
 }

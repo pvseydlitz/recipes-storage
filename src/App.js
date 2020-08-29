@@ -1,25 +1,18 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import Grid from './Grid'
-import Header from './Header'
-import Footer from './Footer'
-import Recipe from './Recipe'
-import recipes from './recipes.json'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
+import Home from './Home'
 
 export default function App() {
   return (
-    <Grid>
-      <Header></Header>
-      <Recipes>
-        {recipes.map((recipe, index) => (
-          <Recipe recipe={recipe} key={index}></Recipe>
-        ))}
-      </Recipes>
-      <Footer></Footer>
-    </Grid>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home></Home>
+        </Route>
+        <Route path="/upload">2. Seite</Route>
+      </Switch>
+    </Router>
   )
 }
-
-const Recipes = styled.div`
-  overflow-y: scroll;
-`
