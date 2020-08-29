@@ -1,0 +1,37 @@
+[
+  {
+    "titel": "Nudeln mit Tomatensauce",
+    "beschreibung": "Nudeln mit einfacher Sauce",
+    "zutaten": [
+      { "menge": 500, "einheit": "g", "produkt": "Penne" },
+      { "menge": 200, "einheit": "ml", "produkt": "Wasser" },
+      { "menge": 300, "einheit": "g", "produkt": "Tomaten" }
+    ],
+    "arbeitsschritte": [
+      "Wasser kochen lassen",
+      "Nudeln ins Wasser geben und umrühren",
+      "Salz hinzugeben ins kochende Wasser",
+      "10-12 min Kochen lassen"
+    ],
+    "kategorien": ["vegetarisch", "nudeln"],
+    "aufwand": "20 - 30",
+    "kosten": 1
+  },
+  {
+    "titel": "Nudeln mit Tomatensauce",
+    "beschreibung": "Nudeln mit einfacher Sauce",
+    "zutaten": [
+      { "menge": 500, "einheit": "g", "produkt": "Penne" },
+      { "menge": 200, "einheit": "ml", "produkt": "Wasser" },
+      { "menge": 300, "einheit": "g", "produkt": "Tomaten" }
+    ],
+    "arbeitsschritte": [
+      "Wasser kochen lassen",
+      "Nudeln ins Wasser geben und umrühren",
+      "Salz hinzugeben ins kochende Wasser"
+    ],
+    "kategorien": ["vegetarisch", "nudeln"],
+    "aufwand": "20 - 30",
+    "kosten": 2
+  }
+]
