@@ -3,14 +3,14 @@ import styled from 'styled-components/macro'
 
 export default function DropdownEinheiten() {
   return (
-    <DropDown name="einheit">
+    <DropDown name="einheit1">
       <option value=""></option>
-      <option value="gramm">g</option>
-      <option value="kilogramm">kg</option>
-      <option value="milliliter">ml</option>
-      <option value="liter">l</option>
-      <option value="esslöffel">EL</option>
-      <option value="tl">TL</option>
+      <option value="g">g</option>
+      <option value="kg">kg</option>
+      <option value="ml">ml</option>
+      <option value="l">l</option>
+      <option value="EL">EL</option>
+      <option value="TL">TL</option>
     </DropDown>
   )
 }
