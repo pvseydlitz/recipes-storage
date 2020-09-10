@@ -10,7 +10,7 @@ import DropdownAufwand from './DropdownAufwand'
 import Textareas from './Textareas'
 import Ingridients from './Ingridients'
 
-export default function Upload() {
+export default function Upload({ handleSubmit }) {
   function uploadRecipe(event) {
     event.preventDefault()
     const form = event.target
@@ -53,6 +53,7 @@ export default function Upload() {
     data.arbeitsschritte = arbeitsschritte
     data.kategorien = kategorien
     console.log(data)
+    handleSubmit(data)
   }
   const categories = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
 

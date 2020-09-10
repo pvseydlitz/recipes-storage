@@ -4,10 +4,10 @@ import styled from 'styled-components/macro'
 export default function DropdownEinheiten() {
   return (
     <DropDown name="kosten">
-      <option value="€">0-5€</option>
-      <option value="€€">5-10 €</option>
-      <option value="€€€">10-15 €</option>
-      <option value="€€€€">{'>15 €'}</option>
+      <option value="1">0-5€</option>
+      <option value="2">5-10 €</option>
+      <option value="3">10-15 €</option>
+      <option value="4">{'>15 €'}</option>
     </DropDown>
   )
 }

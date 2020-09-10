@@ -4,9 +4,8 @@ import Grid from '../Grid'
 import Header from '../Header'
 import Footer from '../Footer'
 import Recipe from './Recipe'
-import recipes from './recipes.json'
 
-export default function Home() {
+export default function Home({ recipes }) {
   return (
     <Grid>
       <Header></Header>
