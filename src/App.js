@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import Home from './Home'
-import Upload from './Upload'
+import Home from './home/Home'
+import Upload from './form/Upload'
 
 export default function App() {
   return (

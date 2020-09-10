@@ -19,9 +19,10 @@ export default function Checkbox({ name, number }) {
 }
 
 const Label = styled.label`
-  background: ${(props) => (props.active ? 'red' : 'lightgrey')};
+  background: ${(props) => (props.active ? 'darkgrey' : 'lightgrey')};
   padding: 5px;
   margin-right: 10px;
+  cursor: pointer;
 `
 const Tag = styled.input`
   all: unset;

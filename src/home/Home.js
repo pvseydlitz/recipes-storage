@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import Grid from './Grid'
-import Header from './Header'
-import Footer from './Footer'
+import Grid from '../Grid'
+import Header from '../Header'
+import Footer from '../Footer'
 import Recipe from './Recipe'
 import recipes from './recipes.json'
 

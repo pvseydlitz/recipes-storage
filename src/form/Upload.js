@@ -1,13 +1,15 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import './upload.css'
-import Grid from './Grid'
-import Header from './Header'
-import Footer from './Footer'
+import Grid from '../Grid'
+import Header from '../Header'
+import Footer from '../Footer'
 import DropdownEinheiten from './DropdownEinheiten'
 import Checkbox from './Checkbox'
-import plusIcon from './icons/plus.svg'
-import minusIcon from './icons/minus.svg'
+import DropdownKosten from './DropdownKosten'
+import DropdownAufwand from './DropdownAufwand'
+import plusIcon from '../icons/plus.svg'
+import minusIcon from '../icons/minus.svg'
 
 export default function Upload() {
   function showMoreInputFields() {
@@ -60,7 +62,6 @@ export default function Upload() {
   function hideLastTextArea() {
     const numberOfInputs =
       document.querySelectorAll('.GridTextareas').length + 1 + 10
-    console.log(numberOfInputs)
     if (numberOfInputs > 11) {
       const searchedElement = document.getElementById(numberOfInputs)
       searchedElement.remove()
@@ -110,7 +111,7 @@ export default function Upload() {
     data.kategorien = kategorien
     console.log(data)
   }
-  const categories = ['vegetarisch', 'fisch', 'fleisch']
+  const categories = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
 
   return (
     <Grid>
@@ -143,11 +144,20 @@ export default function Upload() {
             <Icon src={plusIcon} onClick={() => showMoreTextAreas()}></Icon>
             <Icon src={minusIcon} onClick={() => hideLastTextArea()}></Icon>
           </Icons>
+          <Headline>Kategorien</Headline>
           <CheckBoxes>
             {categories.map((categorie, index) => (
               <Checkbox name={categorie} number={index} key={index}></Checkbox>
             ))}
           </CheckBoxes>
+          <GridColumn>
+            <Headline>Kosten</Headline>
+            <DropdownKosten></DropdownKosten>
+          </GridColumn>
+          <GridColumn>
+            <Headline>Arbeitsaufwand</Headline>
+            <DropdownAufwand></DropdownAufwand>
+          </GridColumn>
           <Center>
             <Button>Rezept Hochladen</Button>
           </Center>
@@ -200,6 +210,12 @@ const Icons = styled.div`
 `
 const CheckBoxes = styled.div`
   display: inline-block;
+`
+const GridColumn = styled.div`
+  display: grid;
+  grid-template-columns: 140px auto;
+  align-items: center;
+  margin: 10px 0;
 `
 const Center = styled.div`
   display: flex;
