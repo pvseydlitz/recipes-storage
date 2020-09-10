@@ -1,0 +1,17 @@
+{
+  "name": "recipes-storage-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --inspect --watch server.js server.js"
+  },
+  "keywords": [],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "4.17.1",
+    "mongoose": "5.7.10",
+    "nodemon": "1.19.4",
+    "uid": "0.0.2"
+  }
+}
