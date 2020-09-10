@@ -5,14 +5,15 @@ import Grid from './Grid'
 import Header from './Header'
 import Footer from './Footer'
 import DropdownEinheiten from './DropdownEinheiten'
+import Checkbox from './Checkbox'
 import plusIcon from './icons/plus.svg'
 import minusIcon from './icons/minus.svg'
 
 export default function Upload() {
   function showMoreInputFields() {
-    let numberOfInputs = document.querySelectorAll('.GridZutaten').length
+    const numberOfInputs = document.querySelectorAll('.GridZutaten').length
     const searchedElement = numberOfInputs + 1
-    let number = numberOfInputs + 2
+    const number = numberOfInputs + 2
     const el = document.getElementById(`${searchedElement}`)
     const newInput = document.createElement('div')
     newInput.className = 'GridZutaten'
@@ -35,9 +36,32 @@ export default function Upload() {
     `
     el.insertAdjacentElement('afterend', newInput)
   }
+  function showMoreTextAreas() {
+    const numberOfInputs = document.querySelectorAll('.GridTextareas').length
+    const searchedElement = numberOfInputs + 1 + 10
+    const number = numberOfInputs + 2
+    const el = document.getElementById(`${searchedElement}`)
+    const newTextArea = document.createElement('div')
+    newTextArea.className = 'GridTextareas'
+    newTextArea.id = number + 10
+    newTextArea.innerHTML = `
+        <h4 class="Headline">${number}.</h4>
+        <textarea rows="3" class="Textarea" name="arbeitsschritt${number}"></textarea>
+    `
+    el.insertAdjacentElement('afterend', newTextArea)
+  }
   function hideLastInputField() {
     let numberOfInputs = document.querySelectorAll('.GridZutaten').length + 1
     if (numberOfInputs > 1) {
+      const searchedElement = document.getElementById(numberOfInputs)
+      searchedElement.remove()
+    }
+  }
+  function hideLastTextArea() {
+    const numberOfInputs =
+      document.querySelectorAll('.GridTextareas').length + 1 + 10
+    console.log(numberOfInputs)
+    if (numberOfInputs > 11) {
       const searchedElement = document.getElementById(numberOfInputs)
       searchedElement.remove()
     }
@@ -51,6 +75,8 @@ export default function Upload() {
 
     let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     let zutaten = []
+    let arbeitsschritte = []
+    let kategorien = []
     numbers.forEach((number) => {
       let menge = 'menge' + String(number)
       if (menge in data === true) {
@@ -67,10 +93,24 @@ export default function Upload() {
         delete data[einheit]
         delete data[produkt]
       }
+      let arbeitsschritt = 'arbeitsschritt' + String(number)
+      if (arbeitsschritt in data === true) {
+        arbeitsschritte.push(data[arbeitsschritt])
+        delete data[arbeitsschritt]
+      }
+      let kategorie = 19 + number
+
+      if (kategorie in data === true) {
+        kategorien.push(data[kategorie])
+        delete data[kategorie]
+      }
     })
     data.zutaten = zutaten
+    data.arbeitsschritte = arbeitsschritte
+    data.kategorien = kategorien
     console.log(data)
   }
+  const categories = ['vegetarisch', 'fisch', 'fleisch']
 
   return (
     <Grid>
@@ -94,6 +134,20 @@ export default function Upload() {
             <Icon src={plusIcon} onClick={() => showMoreInputFields()}></Icon>
             <Icon src={minusIcon} onClick={() => hideLastInputField()}></Icon>
           </Icons>
+          <Headline>Arbeitsschritte</Headline>
+          <WrapperTextareas id={11}>
+            <Headline>1.</Headline>
+            <Textarea rows="3" name="arbeitsschritt1"></Textarea>
+          </WrapperTextareas>
+          <Icons>
+            <Icon src={plusIcon} onClick={() => showMoreTextAreas()}></Icon>
+            <Icon src={minusIcon} onClick={() => hideLastTextArea()}></Icon>
+          </Icons>
+          <CheckBoxes>
+            {categories.map((categorie, index) => (
+              <Checkbox name={categorie} number={index} key={index}></Checkbox>
+            ))}
+          </CheckBoxes>
           <Center>
             <Button>Rezept Hochladen</Button>
           </Center>
@@ -105,10 +159,11 @@ export default function Upload() {
 }
 const Wrapper = styled.div`
   overflow-y: scroll;
+  width: 100vw;
 `
 const Form = styled.form`
   display: grid;
-  grid-template-rows: repeat(2, 20px 46px) 20px;
+  /* grid-template-rows: repeat(2, 20px 46px) 20px; */
   margin: 15px;
   grid-gap: 15px;
 `
@@ -119,6 +174,15 @@ const Headline = styled.h4`
 const Input = styled.input`
   height: 30px;
   width: auto;
+  border: solid 2px black;
+`
+const WrapperTextareas = styled.div`
+  display: grid;
+  grid-template-columns: 20px auto;
+`
+const Textarea = styled.textarea`
+  font-size: 14px;
+  resize: vertical;
   border: solid 2px black;
 `
 const GridZutaten = styled.div`
@@ -134,11 +198,15 @@ const Icon = styled.img`
 const Icons = styled.div`
   display: inline-block;
 `
+const CheckBoxes = styled.div`
+  display: inline-block;
+`
 const Center = styled.div`
   display: flex;
   justify-content: center;
   height: 30px;
 `
+
 const Button = styled.button`
   height: 30px;
   all: unset;

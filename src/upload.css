@@ -32,3 +32,12 @@
   background-repeat: no-repeat;
   background-position: 95% center;
 }
+.GridTextareas {
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+.Textarea {
+  font-size: 14px;
+  resize: vertical;
+  border: solid 2px black;
+}
