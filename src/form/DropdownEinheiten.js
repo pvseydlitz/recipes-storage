@@ -25,7 +25,7 @@ const DropDown = styled.select`
   background: lightgrey;
   font-size: 16px;
   width: 80px;
-  height: 36px;
+  height: 26px;
   padding-left: 10px;
   background-image: url('https://res.cloudinary.com/dajgs01gh/image/upload/v1581717374/dropdown_y3kmal.svg');
   background-size: 20%;

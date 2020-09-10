@@ -3,7 +3,7 @@
   margin: 0%;
 }
 .Input {
-  height: 30px;
+  height: 20px;
   width: auto;
   border: solid 2px black;
 }
@@ -11,8 +11,9 @@
 .GridZutaten {
   display: grid;
   grid-template-columns: 80px 80px auto;
-  grid-template-rows: 20px 36px;
+  grid-template-rows: 26px;
   grid-gap: 15px;
+  margin-top: 10px;
 }
 
 .Dropdown {
@@ -25,7 +26,7 @@
   background: lightgrey;
   font-size: 16px;
   width: 80px;
-  height: 36px;
+  height: 26px;
   padding-left: 10px;
   background-image: url('https://res.cloudinary.com/dajgs01gh/image/upload/v1581717374/dropdown_y3kmal.svg');
   background-size: 20%;
@@ -35,6 +36,7 @@
 .GridTextareas {
   display: grid;
   grid-template-columns: 20px auto;
+  margin-top: 10px;
 }
 .Textarea {
   font-size: 14px;
