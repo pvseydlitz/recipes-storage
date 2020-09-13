@@ -13,7 +13,7 @@ export default function Textareas() {
     newTextArea.id = number + 10
     newTextArea.innerHTML = `
         <h4 class="Headline">${number}.</h4>
-        <textarea rows="3" class="Textarea" name="arbeitsschritt${number}"></textarea>
+        <textarea rows="3" class="Textarea" name="arbeitsschritt${number}" id="arbeitsschritt${number}"></textarea>
     `
     el.insertAdjacentElement('afterend', newTextArea)
   }
@@ -30,7 +30,11 @@ export default function Textareas() {
     <div>
       <WrapperTextareas id={11}>
         <Headline>1.</Headline>
-        <Textarea rows="3" name="arbeitsschritt1"></Textarea>
+        <Textarea
+          rows="3"
+          name="arbeitsschritt1"
+          id="arbeitsschritt1"
+        ></Textarea>
       </WrapperTextareas>
       <Icons show={showMoreTextAreas} hide={hideLastTextArea}></Icons>
     </div>

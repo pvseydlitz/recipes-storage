@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components/macro'
 import './upload.css'
 import Grid from '../Grid'
@@ -10,7 +10,43 @@ import DropdownAufwand from './DropdownAufwand'
 import Textareas from './Textareas'
 import Ingridients from './Ingridients'
 
+import { showMoreInputFields, showMoreTextAreas } from './functions'
+
 export default function Upload({ handleSubmit }) {
+  useEffect(() => {
+    fillOutInputForEditing()
+  }, [])
+  function fillOutInputForEditing() {
+    const recipeToEdit = localStorage.getItem('recipe to edit')
+    const recipeAsObject = JSON.parse(recipeToEdit)
+    if (recipeToEdit !== null) {
+      document.querySelector('#titel').value = recipeAsObject.titel
+      document.querySelector('#beschreibung').value =
+        recipeAsObject.beschreibung
+      for (let i = 1; i <= recipeAsObject.zutaten.length; i++) {
+        document.querySelector(`#menge${i}`).value =
+          recipeAsObject.zutaten[i - 1].menge
+        document.querySelector(`#einheit${i}`).value =
+          recipeAsObject.zutaten[i - 1].einheit
+        document.querySelector(`#produkt${i}`).value =
+          recipeAsObject.zutaten[i - 1].produkt
+        showMoreInputFields()
+      }
+      for (let i = 1; i <= recipeAsObject.arbeitsschritte.length; i++) {
+        document.querySelector(`#arbeitsschritt${i}`).value =
+          recipeAsObject.arbeitsschritte[i - 1]
+        showMoreTextAreas()
+      }
+      const ids = [20, 21, 22, 23, 24]
+      const kategorien = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
+      ids.forEach((id, index) => {
+        if (recipeAsObject.kategorien.includes(kategorien[index])) {
+          document.getElementById(`${id}`).click()
+        }
+      })
+    }
+    localStorage.removeItem('recipe to edit')
+  }
   function uploadRecipe(event) {
     event.preventDefault()
     const form = event.target
@@ -63,9 +99,9 @@ export default function Upload({ handleSubmit }) {
       <Wrapper>
         <Form onSubmit={(event) => uploadRecipe(event)}>
           <Headline>Titel</Headline>
-          <Input type="text" name="titel"></Input>
+          <Input type="text" name="titel" id="titel"></Input>
           <Headline>Beschreibung</Headline>
-          <Input type="text" name="beschreibung"></Input>
+          <Input type="text" name="beschreibung" id="beschreibung"></Input>
           <Headline>Zutaten</Headline>
           <Ingridients></Ingridients>
           <Headline>Arbeitsschritte</Headline>

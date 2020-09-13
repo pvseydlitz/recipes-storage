@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-export default function Recipe(recipe) {
-  const data = recipe.recipe
+import editIcon from '../icons/edit.svg'
+
+export default function Recipe({ recipe }) {
+  const data = recipe
 
   let kosten = ''
   switch (data.kosten) {
@@ -21,10 +23,15 @@ export default function Recipe(recipe) {
     default:
       kosten = '€'
   }
+  function clickEditButton() {
+    localStorage.setItem('recipe to edit', JSON.stringify(recipe))
+    window.location.href = '/upload'
+  }
 
   return (
     <Wrapper>
       <Title>{data.titel}</Title>
+      <Icon src={editIcon} onClick={clickEditButton}></Icon>
       <Text>{data.beschreibung}</Text>
       <Headline>Benötigte Zutaten</Headline>
       <ul>
@@ -54,6 +61,13 @@ const Wrapper = styled.div`
   border-radius: 15px;
   margin: 15px;
   padding: 10px;
+  position: relative;
+`
+const Icon = styled.img`
+  width: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `
 const Title = styled.p`
   margin: 0;

@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 
 export default function DropdownEinheiten() {
   return (
-    <DropDown name="einheit1">
+    <DropDown name="einheit1" id="einheit1">
       <option value=""></option>
       <option value="g">g</option>
       <option value="kg">kg</option>

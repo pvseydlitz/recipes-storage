@@ -13,17 +13,17 @@ export default function Ingridients() {
     newInput.className = 'GridZutaten'
     newInput.id = number
     newInput.innerHTML = `
-              <input class="Input" type="number" name="menge${number}"></input>
-              <select class="Dropdown" name="einheit${number}">
+              <input class="Input" type="number" name="menge${number}" id="menge${number}"></input>
+              <select class="Dropdown" name="einheit${number}" id="einheit${number}">
                 <option value=""></option>
-                <option value="gramm">g</option>
-                <option value="kilogramm">kg</option>
-                <option value="milliliter">ml</option>
-                <option value="liter">l</option>
-                <option value="esslöffel">EL</option>
-                <option value="tl">TL</option>
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="ml">ml</option>
+                <option value="l">l</option>
+                <option value="EL">EL</option>
+                <option value="TL">TL</option>
               </select>
-              <input class="Input" type="text" name="produkt${number}"></input>
+              <input class="Input" type="text" name="produkt${number}" id="produkt${number}"></input>
         `
     el.insertAdjacentElement('afterend', newInput)
   }
@@ -41,14 +41,15 @@ export default function Ingridients() {
         <Headline>Menge</Headline>
         <Headline>Einheit</Headline>
         <Headline>Produkt</Headline>
-        <Input type="number" name="menge1"></Input>
+        <Input type="number" name="menge1" id="menge1"></Input>
         <DropdownEinheiten></DropdownEinheiten>
-        <Input type="text" name="produkt1"></Input>
+        <Input type="text" name="produkt1" id="produkt1"></Input>
       </GridZutaten>
       <Icons show={showMoreInputFields} hide={hideLastInputField}></Icons>
     </div>
   )
 }
+
 const GridZutaten = styled.div`
   display: grid;
   grid-template-columns: 80px 80px auto;
