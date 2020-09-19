@@ -1,6 +1,10 @@
 export function getRecipes() {
   return fetch('/recipes').then((res) => res.json())
 }
+export function checkIfRecipeExists(id) {
+  console.log(id)
+  return fetch('/recipes/' + id).then((res) => res.status)
+}
 
 export function postRecipe(recipe) {
   return fetch('/recipes', {

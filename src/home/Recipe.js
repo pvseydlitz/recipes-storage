@@ -8,16 +8,16 @@ export default function Recipe({ recipe }) {
 
   let kosten = ''
   switch (data.kosten) {
-    case 1:
+    case '1':
       kosten = '€'
       break
-    case 2:
+    case '2':
       kosten = '€€'
       break
-    case 3:
+    case '3':
       kosten = '€€€'
       break
-    case 4:
+    case '4':
       kosten = '€€€€'
       break
     default:
@@ -50,7 +50,7 @@ export default function Recipe({ recipe }) {
       {data.kategorien.map((kategorie, index) => (
         <Kategorie key={index}>{kategorie}</Kategorie>
       ))}
-      <Text>Aufwand: {data.aufwand} min</Text>
+      <Text>Aufwand: {data.aufwand}</Text>
       <Text>Kosten: {kosten}</Text>
     </Wrapper>
   )
@@ -68,6 +68,7 @@ const Icon = styled.img`
   position: absolute;
   top: 10px;
   right: 10px;
+  cursor: pointer;
 `
 const Title = styled.p`
   margin: 0;

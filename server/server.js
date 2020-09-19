@@ -19,8 +19,8 @@ app.get('/recipes', (req, res) => {
 
 app.get('/recipes/:id', (req, res) => {
   Recipe.findById(req.params.id)
-    .then((recipe) => res.json(recipe))
-    .catch((err) => res.json(err))
+    .then((recipe) => res.status(200).json(recipe))
+    .catch((err) => res.status(404).json(err))
 })
 
 app.post('/recipes', (req, res) => {

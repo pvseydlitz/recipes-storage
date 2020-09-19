@@ -11,11 +11,13 @@ import Textareas from './Textareas'
 import Ingridients from './Ingridients'
 
 import { showMoreInputFields, showMoreTextAreas } from './functions'
+import { checkIfRecipeExists } from '../services'
 
 export default function Upload({ handleSubmit }) {
   useEffect(() => {
     fillOutInputForEditing()
-  }, [])
+  })
+  const categories = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
   function fillOutInputForEditing() {
     const recipeToEdit = localStorage.getItem('recipe to edit')
     const recipeAsObject = JSON.parse(recipeToEdit)
@@ -38,21 +40,28 @@ export default function Upload({ handleSubmit }) {
         showMoreTextAreas()
       }
       const ids = [20, 21, 22, 23, 24]
-      const kategorien = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
       ids.forEach((id, index) => {
-        if (recipeAsObject.kategorien.includes(kategorien[index])) {
+        if (recipeAsObject.kategorien.includes(categories[index])) {
           document.getElementById(`${id}`).click()
         }
       })
+      document.getElementById('kosten').value = recipeAsObject.kosten
+      document.getElementById('aufwand').value = recipeAsObject.aufwand
+      document.getElementById('id').value = recipeAsObject._id
+      localStorage.removeItem('recipe to edit')
     }
-    localStorage.removeItem('recipe to edit')
   }
   function uploadRecipe(event) {
     event.preventDefault()
     const form = event.target
     const formData = new FormData(form)
     const data = Object.fromEntries(formData)
+    data.id === '' ? (data.id = 1) : (data.id = data.id)
+    let recipeExists = false
 
+    const status = checkIfRecipeExists(data.id)
+
+    console.log(status)
     let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     let zutaten = []
     let arbeitsschritte = []
@@ -88,10 +97,14 @@ export default function Upload({ handleSubmit }) {
     data.zutaten = zutaten
     data.arbeitsschritte = arbeitsschritte
     data.kategorien = kategorien
-    console.log(data)
-    handleSubmit(data)
+    if (data.id !== '') {
+      console.log('id ist da')
+    } else {
+      console.log('id ist nicht da')
+      //handleSubmit(data)
+    }
+    console.log(data.id)
   }
-  const categories = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
 
   return (
     <Grid>
@@ -119,6 +132,10 @@ export default function Upload({ handleSubmit }) {
           <GridColumn>
             <Headline>Arbeitsaufwand</Headline>
             <DropdownAufwand></DropdownAufwand>
+          </GridColumn>
+          <GridColumn>
+            <Headline>ID</Headline>
+            <Input name="id" id="id" readOnly={true}></Input>
           </GridColumn>
           <Center>
             <Button>Rezept Hochladen</Button>

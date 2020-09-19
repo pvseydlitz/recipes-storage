@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 
 export default function DropdownEinheiten() {
   return (
-    <DropDown name="aufwand">
+    <DropDown name="aufwand" id="aufwand">
       <option value="0-10 min">0-10 min</option>
       <option value="10-20 min">10-20 min</option>
       <option value="20-30 min">20-30 min</option>
