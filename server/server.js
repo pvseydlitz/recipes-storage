@@ -17,10 +17,17 @@ app.get('/recipes', (req, res) => {
     .catch((err) => res.json(err))
 })
 
-app.get('/recipes/:id', (req, res) => {
-  Recipe.findById(req.params.id)
-    .then((recipe) => res.status(200).json(recipe))
-    .catch((err) => res.status(404).json(err))
+app.post('/checkIfRecipeExists', (req, res) => {
+  Recipe.find().then((recipes) => {
+    let exists = false
+    for (let i = 0; i<recipes.length; i++) {
+      if (String(recipes[i]._id) === String(req.body._id)) {
+        exists = true
+      }
+    }
+    res.status(200).json(exists)
+  })
+  .catch((err) => res.status(404).json(err))
 })
 
 app.post('/recipes', (req, res) => {

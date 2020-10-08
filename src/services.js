@@ -1,9 +1,15 @@
 export function getRecipes() {
   return fetch('/recipes').then((res) => res.json())
 }
-export function checkIfRecipeExists(id) {
-  console.log(id)
-  return fetch('/recipes/' + id).then((res) => res.status)
+export function checkIfRecipeExists(_id) {
+  const searchedRecipe = {"_id": `${_id}`}
+  return fetch('/checkIfRecipeExists', {
+    method: 'POST',
+    body: JSON.stringify(searchedRecipe),
+    headers: {
+      'content-type': 'application/json',
+    },
+  }).then((res) => res.json())
 }
 
 export function postRecipe(recipe) {

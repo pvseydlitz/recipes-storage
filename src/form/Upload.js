@@ -57,53 +57,51 @@ export default function Upload({ handleSubmit }) {
     const formData = new FormData(form)
     const data = Object.fromEntries(formData)
     data.id === '' ? (data.id = 1) : (data.id = data.id)
-    let recipeExists = false
 
-    const status = checkIfRecipeExists(data.id)
+    checkIfRecipeExists(data.id).then((exists) => {
 
-    console.log(status)
-    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-    let zutaten = []
-    let arbeitsschritte = []
-    let kategorien = []
-    numbers.forEach((number) => {
-      let menge = 'menge' + String(number)
-      if (menge in data === true) {
+      let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+      let zutaten = []
+      let arbeitsschritte = []
+      let kategorien = []
+      numbers.forEach((number) => {
         let menge = 'menge' + String(number)
-        let einheit = 'einheit' + String(number)
-        let produkt = 'produkt' + String(number)
-        let zutat = {
-          menge: data[menge],
-          einheit: data[einheit],
-          produkt: data[produkt],
+        if (menge in data === true) {
+          let menge = 'menge' + String(number)
+          let einheit = 'einheit' + String(number)
+          let produkt = 'produkt' + String(number)
+          let zutat = {
+            menge: data[menge],
+            einheit: data[einheit],
+            produkt: data[produkt],
+          }
+          zutaten.push(zutat)
+          delete data[menge]
+          delete data[einheit]
+          delete data[produkt]
         }
-        zutaten.push(zutat)
-        delete data[menge]
-        delete data[einheit]
-        delete data[produkt]
-      }
-      let arbeitsschritt = 'arbeitsschritt' + String(number)
-      if (arbeitsschritt in data === true) {
-        arbeitsschritte.push(data[arbeitsschritt])
-        delete data[arbeitsschritt]
-      }
-      let kategorie = 19 + number
+        let arbeitsschritt = 'arbeitsschritt' + String(number)
+        if (arbeitsschritt in data === true) {
+          arbeitsschritte.push(data[arbeitsschritt])
+          delete data[arbeitsschritt]
+        }
+        let kategorie = 19 + number
 
-      if (kategorie in data === true) {
-        kategorien.push(data[kategorie])
-        delete data[kategorie]
+        if (kategorie in data === true) {
+          kategorien.push(data[kategorie])
+          delete data[kategorie]
+        }
+      })
+      data.zutaten = zutaten
+      data.arbeitsschritte = arbeitsschritte
+      data.kategorien = kategorien
+      if (exists === true) {
+        console.log('patch')
+      } else {
+        console.log('submit')
+        //handleSubmit(data)
       }
     })
-    data.zutaten = zutaten
-    data.arbeitsschritte = arbeitsschritte
-    data.kategorien = kategorien
-    if (data.id !== '') {
-      console.log('id ist da')
-    } else {
-      console.log('id ist nicht da')
-      //handleSubmit(data)
-    }
-    console.log(data.id)
   }
 
   return (
