@@ -13,7 +13,7 @@ import Ingridients from './Ingridients'
 import { showMoreInputFields, showMoreTextAreas } from './functions'
 import { checkIfRecipeExists } from '../services'
 
-export default function Upload({ handleSubmit }) {
+export default function Upload({ handleSubmit, handlePatch }) {
   useEffect(() => {
     fillOutInputForEditing()
   })
@@ -56,10 +56,10 @@ export default function Upload({ handleSubmit }) {
     const form = event.target
     const formData = new FormData(form)
     const data = Object.fromEntries(formData)
-    data.id === '' ? (data.id = 1) : (data.id = data.id)
+    let id = 0
+    data.id === '' ? id = 1 : id = data.id
 
-    checkIfRecipeExists(data.id).then((exists) => {
-
+    checkIfRecipeExists(id).then((exists) => {
       let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
       let zutaten = []
       let arbeitsschritte = []
@@ -75,13 +75,15 @@ export default function Upload({ handleSubmit }) {
             einheit: data[einheit],
             produkt: data[produkt],
           }
-          zutaten.push(zutat)
+          if (zutat.menge !== "" && zutaten.einheit !== "" && zutaten.produkt !== "") {
+            zutaten.push(zutat)
+          }
           delete data[menge]
           delete data[einheit]
           delete data[produkt]
         }
         let arbeitsschritt = 'arbeitsschritt' + String(number)
-        if (arbeitsschritt in data === true) {
+        if (arbeitsschritt in data === true && data[arbeitsschritt] !== "") {
           arbeitsschritte.push(data[arbeitsschritt])
           delete data[arbeitsschritt]
         }
@@ -97,9 +99,10 @@ export default function Upload({ handleSubmit }) {
       data.kategorien = kategorien
       if (exists === true) {
         console.log('patch')
+        handlePatch(data)
       } else {
         console.log('submit')
-        //handleSubmit(data)
+        handleSubmit(data)
       }
     })
   }

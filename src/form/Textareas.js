@@ -2,21 +2,9 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import Icons from './Icons'
 
+import {showMoreTextAreas} from './functions'
+
 export default function Textareas() {
-  function showMoreTextAreas() {
-    const numberOfInputs = document.querySelectorAll('.GridTextareas').length
-    const searchedElement = numberOfInputs + 1 + 10
-    const number = numberOfInputs + 2
-    const el = document.getElementById(`${searchedElement}`)
-    const newTextArea = document.createElement('div')
-    newTextArea.className = 'GridTextareas'
-    newTextArea.id = number + 10
-    newTextArea.innerHTML = `
-        <h4 class="Headline">${number}.</h4>
-        <textarea rows="3" class="Textarea" name="arbeitsschritt${number}" id="arbeitsschritt${number}"></textarea>
-    `
-    el.insertAdjacentElement('afterend', newTextArea)
-  }
 
   function hideLastTextArea() {
     const numberOfInputs =
