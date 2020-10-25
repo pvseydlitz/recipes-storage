@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import Globalstyles from '../Globalstyles'
 import Grid from '../Grid'
 import Header from '../Header'
 import Footer from '../Footer'
@@ -15,6 +16,7 @@ export default function Home({ recipes }) {
 
   return (
     <div>
+      <Globalstyles></Globalstyles>
       <Grid>
         <Recipes>
           <Header title="Rezeptesammlung"></Header>

@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
+import CookingStep1 from './CookingStep1'
+
 import editIcon from '../icons/edit.svg'
+import playIcon from '../icons/playIcon.svg'
 
 export default function Recipe({ recipe }) {
   const data = recipe
@@ -27,32 +30,40 @@ export default function Recipe({ recipe }) {
     localStorage.setItem('recipe to edit', JSON.stringify(recipe))
     window.location.href = '/upload'
   }
-
+  function startCooking() {
+    console.log(recipe)
+    const modal = document.getElementById('modalStep1')
+    modal.style.display = 'block'
+  }
   return (
-    <Wrapper>
-      <Title>{data.titel}</Title>
-      <Icon src={editIcon} onClick={clickEditButton}></Icon>
-      <Text>{data.beschreibung}</Text>
-      <Headline>Benötigte Zutaten</Headline>
-      <ul>
-        {data.zutaten.map((zutat, index) => (
-          <li key={index}>
-            {zutat.menge} {zutat.einheit} {zutat.produkt}
-          </li>
+    <div>
+      <Wrapper>
+        <Title>{data.titel}</Title>
+        <Icon src={editIcon} onClick={clickEditButton}></Icon>
+        <Icon src={playIcon} onClick={startCooking} style={{right: "40px"}}></Icon>
+        <Text>{data.beschreibung}</Text>
+        <Headline>Benötigte Zutaten</Headline>
+        <ul>
+          {data.zutaten.map((zutat, index) => (
+            <li key={index}>
+              {zutat.menge} {zutat.einheit} {zutat.produkt}
+            </li>
+          ))}
+        </ul>
+        <Headline>Arbeitsschritte</Headline>
+        <ol>
+          {data.arbeitsschritte.map((arbeitsschritt, index) => (
+            <li key={index}>{arbeitsschritt}</li>
+          ))}
+        </ol>
+        {data.kategorien.map((kategorie, index) => (
+          <Kategorie key={index}>{kategorie}</Kategorie>
         ))}
-      </ul>
-      <Headline>Arbeitsschritte</Headline>
-      <ol>
-        {data.arbeitsschritte.map((arbeitsschritt, index) => (
-          <li key={index}>{arbeitsschritt}</li>
-        ))}
-      </ol>
-      {data.kategorien.map((kategorie, index) => (
-        <Kategorie key={index}>{kategorie}</Kategorie>
-      ))}
-      <Text>Aufwand: {data.aufwand}</Text>
-      <Text>Kosten: {kosten}</Text>
-    </Wrapper>
+        <Text>Aufwand: {data.aufwand}</Text>
+        <Text>Kosten: {kosten}</Text>
+      </Wrapper>
+        <CookingStep1 recipe={recipe}></CookingStep1>
+    </div>
   )
 }
 
@@ -85,4 +96,7 @@ const Kategorie = styled.div`
   display: inline-block;
   margin: 10px;
   border-radius: 5px;
+`
+const Modal = styled.div`
+  display: none;
 `
