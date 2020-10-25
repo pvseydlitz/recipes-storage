@@ -109,8 +109,8 @@ export default function Upload({ handleSubmit, handlePatch }) {
 
   return (
     <Grid>
-      <Header></Header>
       <Wrapper>
+        <Header title="Neues Rezept hinzufügen"></Header>
         <Form onSubmit={(event) => uploadRecipe(event)}>
           <Headline>Titel</Headline>
           <Input type="text" name="titel" id="titel"></Input>

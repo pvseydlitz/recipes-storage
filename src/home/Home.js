@@ -5,20 +5,38 @@ import Header from '../Header'
 import Footer from '../Footer'
 import Recipe from './Recipe'
 
+import arrowUp from '../icons/arrowUp.svg'
+
 export default function Home({ recipes }) {
+  function scrollToTop() {
+    const header = document.querySelector('#header')
+    header.scrollIntoView({block: "end", behavior: "smooth"})
+  }
+
   return (
-    <Grid>
-      <Header></Header>
-      <Recipes>
-        {recipes.map((recipe, index) => (
-          <Recipe recipe={recipe} key={index}></Recipe>
-        ))}
-      </Recipes>
-      <Footer></Footer>
-    </Grid>
+    <div>
+      <Grid>
+        <Recipes>
+          <Header title="Rezeptesammlung"></Header>
+          {recipes.map((recipe, index) => (
+            <Recipe recipe={recipe} key={index}></Recipe>
+          ))}
+        </Recipes>
+        <Footer></Footer>
+      </Grid>
+      <ArrowUp src={arrowUp} onClick={() => scrollToTop()}></ArrowUp>
+    </div>
   )
 }
 
 const Recipes = styled.div`
   overflow-y: scroll;
+  position: relative;
+`
+const ArrowUp = styled.img`
+position: absolute;
+bottom: 80px;
+right: 20px;
+width: 30px;
+cursor: pointer;
 `
