@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-import CookingStep1 from './CookingStep1'
+import ModalDetailsRecipe from './ModalDetailsRecipe'
+import ModalArbeitsschritte from './ModalArbeitsschritte'
 
 import editIcon from '../icons/edit.svg'
 import playIcon from '../icons/playIcon.svg'
@@ -32,7 +33,7 @@ export default function Recipe({ recipe }) {
   }
   function startCooking() {
     console.log(recipe)
-    const modal = document.getElementById('modalStep1')
+    const modal = document.getElementById('modalDetails')
     modal.style.display = 'block'
   }
   return (
@@ -40,7 +41,7 @@ export default function Recipe({ recipe }) {
       <Wrapper>
         <Title>{data.titel}</Title>
         <Icon src={editIcon} onClick={clickEditButton}></Icon>
-        <Icon src={playIcon} onClick={startCooking} style={{right: "40px"}}></Icon>
+        <Icon src={playIcon} onClick={startCooking} style={{ right: "40px" }}></Icon>
         <Text>{data.beschreibung}</Text>
         <Headline>Benötigte Zutaten</Headline>
         <ul>
@@ -62,7 +63,10 @@ export default function Recipe({ recipe }) {
         <Text>Aufwand: {data.aufwand}</Text>
         <Text>Kosten: {kosten}</Text>
       </Wrapper>
-        <CookingStep1 recipe={recipe}></CookingStep1>
+      <ModalDetailsRecipe recipe={recipe}></ModalDetailsRecipe>
+      {data.arbeitsschritte.map((arbeitsschritt, index) => (
+        <ModalArbeitsschritte arbeitsschritt={arbeitsschritt} index={index} key={index}></ModalArbeitsschritte>
+      ))}
     </div>
   )
 }
