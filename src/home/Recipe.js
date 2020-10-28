@@ -32,8 +32,7 @@ export default function Recipe({ recipe }) {
     window.location.href = '/upload'
   }
   function startCooking() {
-    console.log(recipe)
-    const modal = document.getElementById('modalDetails')
+    const modal = document.getElementById(`modalDetails${recipe._id}`)
     modal.style.display = 'block'
   }
   return (
@@ -41,7 +40,11 @@ export default function Recipe({ recipe }) {
       <Wrapper>
         <Title>{data.titel}</Title>
         <Icon src={editIcon} onClick={clickEditButton}></Icon>
-        <Icon src={playIcon} onClick={startCooking} style={{ right: "40px" }}></Icon>
+        <Icon
+          src={playIcon}
+          onClick={startCooking}
+          style={{ right: '40px' }}
+        ></Icon>
         <Text>{data.beschreibung}</Text>
         <Headline>Benötigte Zutaten</Headline>
         <ul>
@@ -65,7 +68,12 @@ export default function Recipe({ recipe }) {
       </Wrapper>
       <ModalDetailsRecipe recipe={recipe}></ModalDetailsRecipe>
       {data.arbeitsschritte.map((arbeitsschritt, index) => (
-        <ModalArbeitsschritte arbeitsschritt={arbeitsschritt} index={index} key={index}></ModalArbeitsschritte>
+        <ModalArbeitsschritte
+          recipe={data}
+          arbeitsschritt={arbeitsschritt}
+          index={index}
+          key={index}
+        ></ModalArbeitsschritte>
       ))}
     </div>
   )
@@ -100,7 +108,4 @@ const Kategorie = styled.div`
   display: inline-block;
   margin: 10px;
   border-radius: 5px;
-`
-const Modal = styled.div`
-  display: none;
 `

@@ -6,17 +6,17 @@ import arrowRight from '../icons/arrowRight.svg'
 
 export default function ModalDetailsRecipe({ recipe }) {
   function closeModal() {
-    const modal = document.getElementById('modalDetails')
+    const modal = document.getElementById(`modalDetails${recipe._id}`)
     modal.style.display = 'none'
   }
   function showNextModal() {
-    const modal = document.getElementById('modalDetails')
+    const modal = document.getElementById(`modalDetails${recipe._id}`)
     modal.style.display = 'none'
-    const modal2 = document.getElementById('modalStep1')
+    const modal2 = document.getElementById(`modalStep1${recipe._id}`)
     modal2.style.display = 'block'
   }
   return (
-    <OuterWrapper id="modalDetails">
+    <OuterWrapper id={`modalDetails${recipe._id}`}>
       <FlexBox>
         <Wrapper>
           <Headline>{recipe.titel}</Headline>

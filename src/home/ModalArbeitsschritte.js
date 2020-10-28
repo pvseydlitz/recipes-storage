@@ -5,37 +5,41 @@ import closeIcon from '../icons/close.svg'
 import arrowRight from '../icons/arrowRight.svg'
 import arrowLeft from '../icons/arrowLeft.svg'
 
-export default function ModalArbeitsschritte({ arbeitsschritt, index }) {
+export default function ModalArbeitsschritte({
+  arbeitsschritt,
+  index,
+  recipe,
+}) {
   const [showTimer, setShowTimer] = useState(false)
 
-  function closeModal() {
-    const modal = document.getElementById(`modalStep${index + 1}`)
-    modal.style.display = 'none'
-  }
   function showNextModal() {
-    const modal = document.getElementById(`modalStep${index + 1}`)
+    const modal = document.getElementById(`modalStep${index + 1}${recipe._id}`)
     modal.style.display = 'none'
-    const numberOfModals = document.getElementsByClassName(
-      'ModalDetailsRecipe__OuterWrapper-sc-10jvg01-0 bJVCPD'
-    )
-    if (numberOfModals.length > index) {
-      const modal2 = document.getElementById(`modalStep${index + 2}`)
+    if (recipe.arbeitsschritte.length > index + 1) {
+      const modal2 = document.getElementById(
+        `modalStep${index + 2}${recipe._id}`
+      )
       modal2.style.display = 'block'
     } else {
       closeModal()
     }
   }
   function showLastModal() {
-    const modal = document.getElementById(`modalStep${index + 1}`)
+    const modal = document.getElementById(`modalStep${index + 1}${recipe._id}`)
     modal.style.display = 'none'
     if (index !== 0) {
-      const modal2 = document.getElementById(`modalStep${index}`)
+      const modal2 = document.getElementById(`modalStep${index}${recipe._id}`)
       modal2.style.display = 'block'
     } else {
-      const modal2 = document.getElementById(`modalDetails`)
+      const modal2 = document.getElementById(`modalDetails${recipe._id}`)
       modal2.style.display = 'block'
     }
   }
+  function closeModal() {
+    const modal = document.getElementById(`modalStep${index + 1}${recipe._id}`)
+    modal.style.display = 'none'
+  }
+
   function setMinutes(event) {
     const minutesSpan = document.getElementById('minutes')
     minutesSpan.innerHTML = event.target.value
@@ -90,8 +94,9 @@ export default function ModalArbeitsschritte({ arbeitsschritt, index }) {
       pauseButton.innerHTML = 'Pause'
     }
   }
+
   return (
-    <OuterWrapper id={`modalStep${index + 1}`}>
+    <OuterWrapper id={`modalStep${index + 1}${recipe._id}`}>
       <FlexBox>
         <Wrapper>
           <Headline>Arbeitsschritt {index + 1}</Headline>
