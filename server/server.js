@@ -8,6 +8,7 @@ mongoose.connect('mongodb://localhost:27017/recipes', {
 
 const app = express()
 app.use(express.json())
+app.use(express.static(__dirname + '/public'))
 
 app.listen(3333, () => console.log('Express ready on port 3333'))
 
@@ -18,16 +19,17 @@ app.get('/recipes', (req, res) => {
 })
 
 app.post('/checkIfRecipeExists', (req, res) => {
-  Recipe.find().then((recipes) => {
-    let exists = false
-    for (let i = 0; i<recipes.length; i++) {
-      if (String(recipes[i]._id) === String(req.body._id)) {
-        exists = true
+  Recipe.find()
+    .then((recipes) => {
+      let exists = false
+      for (let i = 0; i < recipes.length; i++) {
+        if (String(recipes[i]._id) === String(req.body._id)) {
+          exists = true
+        }
       }
-    }
-    res.status(200).json(exists)
-  })
-  .catch((err) => res.status(404).json(err))
+      res.status(200).json(exists)
+    })
+    .catch((err) => res.status(404).json(err))
 })
 
 app.post('/recipes', (req, res) => {
@@ -47,3 +49,6 @@ app.delete('/recipes/:id', (req, res) => {
     .then((recipe) => res.json(recipe))
     .catch((err) => res.json(err))
 })
+
+const pictureUpload = require('./pictureUpload')
+app.use('/api/', pictureUpload)

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import './upload.css'
 import Grid from '../Grid'
@@ -10,6 +10,8 @@ import DropdownAufwand from './DropdownAufwand'
 import Textareas from './Textareas'
 import Ingridients from './Ingridients'
 
+import uploadIcon from '../icons/upload.svg'
+
 import { showMoreInputFields, showMoreTextAreas } from './functions'
 import { checkIfRecipeExists } from '../services'
 
@@ -17,6 +19,7 @@ export default function Upload({ handleSubmit, handlePatch }) {
   useEffect(() => {
     fillOutInputForEditing()
   })
+  const [picture, setPicture] = useState('Kein Foto ausgewhält')
   const categories = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
   function fillOutInputForEditing() {
     const recipeToEdit = localStorage.getItem('recipe to edit')
@@ -104,11 +107,18 @@ export default function Upload({ handleSubmit, handlePatch }) {
       if (exists === true) {
         handlePatch(data)
       } else {
-        handleSubmit(data)
+        //handleSubmit(data)
+        console.log(data)
       }
     })
   }
-
+  function handlePicture(event) {
+    if (event.target.files.length > 0) {
+      setPicture(event.target.files[0].name)
+    } else {
+      setPicture('Kein Foto ausgewählt')
+    }
+  }
   return (
     <Grid>
       <Wrapper>
@@ -129,15 +139,28 @@ export default function Upload({ handleSubmit, handlePatch }) {
             ))}
           </CheckBoxes>
           <GridColumn>
-            <Headline>Kosten</Headline>
+            <Headline0Margin>Kosten</Headline0Margin>
             <DropdownKosten></DropdownKosten>
           </GridColumn>
           <GridColumn>
-            <Headline>Arbeitsaufwand</Headline>
+            <Headline0Margin>Arbeitsaufwand</Headline0Margin>
             <DropdownAufwand></DropdownAufwand>
           </GridColumn>
           <GridColumn>
-            <Headline>ID</Headline>
+            <Headline0Margin>Foto hochladen</Headline0Margin>
+            <Label htmlFor="photoUpload">
+              <FileUploadIcon src={uploadIcon}></FileUploadIcon>
+              <InputFile
+                id="photoUpload"
+                type="file"
+                name="photoUpload"
+                onChange={(event) => handlePicture(event)}
+              ></InputFile>
+              <ChoosenPicture>&nbsp;&nbsp;{picture}</ChoosenPicture>
+            </Label>
+          </GridColumn>
+          <GridColumn>
+            <Headline0Margin>ID</Headline0Margin>
             <Input name="id" id="id" readOnly={true}></Input>
           </GridColumn>
           <Center>
@@ -162,10 +185,30 @@ const Headline = styled.h4`
   font-size: 16px;
   margin: 20px 0 10px 0;
 `
+const Headline0Margin = styled.h4`
+  font-size: 16px;
+  margin: 0px;
+`
 const Input = styled.input`
   height: 20px;
   width: 80%;
   border: solid 2px black;
+`
+const InputFile = styled.input`
+  display: none;
+`
+const FileUploadIcon = styled.img`
+  width: 30px;
+  cursor: pointer;
+`
+const Label = styled.label`
+  display: flex;
+  height: 100%;
+  align-items: center;
+`
+const ChoosenPicture = styled.span`
+  font-size: 10px;
+  font-style: italic;
 `
 const CheckBoxes = styled.div`
   display: inline-block;
@@ -174,14 +217,13 @@ const GridColumn = styled.div`
   display: grid;
   grid-template-columns: 140px auto;
   align-items: center;
-  margin: 10px 0;
+  margin: 30px 0;
 `
 const Center = styled.div`
   display: flex;
   justify-content: center;
   height: 30px;
 `
-
 const Button = styled.button`
   height: 30px;
   all: unset;
