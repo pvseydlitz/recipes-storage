@@ -5,10 +5,20 @@ const express = require('express')
 mongoose.connect('mongodb://localhost:27017/recipes', {
   useNewUrlParser: true,
 })
-
 const app = express()
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  )
+  next()
+})
 app.use(express.json())
-app.use(express.static(__dirname + '/public'))
+
+const pictureUpload = require('./pictureUpload')
+app.use('/api/', pictureUpload)
 
 app.listen(3333, () => console.log('Express ready on port 3333'))
 
@@ -49,6 +59,3 @@ app.delete('/recipes/:id', (req, res) => {
     .then((recipe) => res.json(recipe))
     .catch((err) => res.json(err))
 })
-
-const pictureUpload = require('./pictureUpload')
-app.use('/api/', pictureUpload)

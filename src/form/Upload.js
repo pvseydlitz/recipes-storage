@@ -13,13 +13,15 @@ import Ingridients from './Ingridients'
 import uploadIcon from '../icons/upload.svg'
 
 import { showMoreInputFields, showMoreTextAreas } from './functions'
-import { checkIfRecipeExists } from '../services'
+import { checkIfRecipeExists, uploadPicture } from '../services'
 
 export default function Upload({ handleSubmit, handlePatch }) {
   useEffect(() => {
     fillOutInputForEditing()
   })
   const [picture, setPicture] = useState('Kein Foto ausgewhält')
+  const [selectedPicture, setSelectedPicture] = useState(null)
+
   const categories = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
   function fillOutInputForEditing() {
     const recipeToEdit = localStorage.getItem('recipe to edit')
@@ -107,14 +109,28 @@ export default function Upload({ handleSubmit, handlePatch }) {
       if (exists === true) {
         handlePatch(data)
       } else {
+        const formDataPicture = new FormData()
+        formDataPicture.append('photoUpload', selectedPicture)
+        uploadPicture(formDataPicture).then((response) => {
+          console.log(response)
+          const picture = {}
+          picture.photoName = response.filename
+          picture.photoPath = response.path
+          picture.originalName = response.originalname
+          picture.type = response.mimetype
+          data.picture = picture
+          delete data.photoUpload
+          console.log(data)
+        })
+
         //handleSubmit(data)
-        console.log(data)
       }
     })
   }
   function handlePicture(event) {
     if (event.target.files.length > 0) {
       setPicture(event.target.files[0].name)
+      setSelectedPicture(event.target.files[0])
     } else {
       setPicture('Kein Foto ausgewählt')
     }
@@ -123,7 +139,10 @@ export default function Upload({ handleSubmit, handlePatch }) {
     <Grid>
       <Wrapper>
         <Header title="Neues Rezept hinzufügen"></Header>
-        <Form onSubmit={(event) => uploadRecipe(event)}>
+        <Form
+          onSubmit={(event) => uploadRecipe(event)}
+          enctype="multipart/form-data"
+        >
           <Headline>Titel</Headline>
           <Input type="text" name="titel" id="titel"></Input>
           <Headline>Beschreibung</Headline>

@@ -2,7 +2,7 @@ export function getRecipes() {
   return fetch('/recipes').then((res) => res.json())
 }
 export function checkIfRecipeExists(_id) {
-  const searchedRecipe = {"_id": `${_id}`}
+  const searchedRecipe = { _id: `${_id}` }
   return fetch('/checkIfRecipeExists', {
     method: 'POST',
     body: JSON.stringify(searchedRecipe),
@@ -36,4 +36,17 @@ export function deleteRecipe(id) {
   return fetch('/recipes/' + id, {
     method: 'DELETE',
   }).then((res) => res.json())
+}
+
+export function uploadPicture(picture) {
+  return (
+    fetch('/api/uploadPicture', {
+      method: 'POST',
+      body: picture,
+    })
+      //.then((response) => response.text())
+      //.then((result) => console.log(result))
+      .then((res) => res.json())
+    //.catch((error) => console.log('error', error))
+  )
 }
