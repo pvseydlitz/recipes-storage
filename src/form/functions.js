@@ -20,6 +20,7 @@ export function showMoreInputFields() {
               <input class="Input" type="text" name="produkt${number}" id="produkt${number}"></input>
         `
   el.insertAdjacentElement('afterend', newInput)
+  document.getElementById(`menge${number}`).focus()
 }
 
 export function showMoreTextAreas() {
@@ -35,4 +36,5 @@ export function showMoreTextAreas() {
         <textarea rows="3" class="Textarea" name="arbeitsschritt${number}" id="arbeitsschritt${number}"></textarea>
     `
   el.insertAdjacentElement('afterend', newTextArea)
+  document.getElementById(`arbeitsschritt${number}`).focus()
 }

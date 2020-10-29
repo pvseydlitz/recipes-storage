@@ -12,9 +12,10 @@ export default function App() {
   function createRecipe(repiceData) {
     postRecipe(repiceData).then((recipe) => {
       setRecipes([recipe, ...recipes])
+      window.location.href = '/'
     })
   }
-  function updateRecipe(recipeData) {
+  function updateRecipe(recipeData) {
     patchRecipe(recipeData).then((patchedRecipe) => {
       const index = recipes.findIndex(
         (recipe) => recipe._id === patchedRecipe._id
@@ -25,7 +26,7 @@ export default function App() {
         patchedRecipe,
         ...recipes.slice(index + 1),
       ])
-      window.location.href = "/"
+      window.location.href = '/'
     })
   }
 
@@ -36,7 +37,10 @@ export default function App() {
           <Home recipes={recipes}></Home>
         </Route>
         <Route path="/upload">
-          <Upload handleSubmit={createRecipe} handlePatch={updateRecipe}></Upload>
+          <Upload
+            handleSubmit={createRecipe}
+            handlePatch={updateRecipe}
+          ></Upload>
         </Route>
       </Switch>
     </Router>

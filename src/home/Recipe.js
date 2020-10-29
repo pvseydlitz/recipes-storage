@@ -46,6 +46,16 @@ export default function Recipe({ recipe }) {
           style={{ right: '40px' }}
         ></Icon>
         <Text>{data.beschreibung}</Text>
+        {data.picture !== undefined ? (
+          <FlexBox>
+            <Image
+              src={require(`../../server/uploads/images/${data.picture.photoName}`)}
+            ></Image>
+          </FlexBox>
+        ) : (
+          ''
+        )}
+
         <Headline>Benötigte Zutaten</Headline>
         <ul>
           {data.zutaten.map((zutat, index) => (
@@ -108,4 +118,12 @@ const Kategorie = styled.div`
   display: inline-block;
   margin: 10px;
   border-radius: 5px;
+`
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: center;
+`
+const Image = styled.img`
+  width: auto;
+  height: 100px;
 `

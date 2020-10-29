@@ -8,6 +8,7 @@ const recipeShema = {
   kategorien: Array,
   aufwand: String,
   kosten: String,
+  picture: Object,
 }
 
 module.exports = mongoose.model('Recipe', recipeShema)

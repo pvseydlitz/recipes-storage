@@ -121,9 +121,8 @@ export default function Upload({ handleSubmit, handlePatch }) {
           data.picture = picture
           delete data.photoUpload
           console.log(data)
+          handleSubmit(data)
         })
-
-        //handleSubmit(data)
       }
     })
   }

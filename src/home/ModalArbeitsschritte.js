@@ -86,12 +86,15 @@ export default function ModalArbeitsschritte({
   }
   function stopTimer() {
     const pauseButton = document.getElementById('pauseButton')
-    if (pauseButton.innerHTML === 'Pause') {
-      clearInterval(intervalID)
-      pauseButton.innerHTML = 'Weiter'
-    } else if (pauseButton.innerHTML === 'Weiter') {
-      countSeconds()
-      pauseButton.innerHTML = 'Pause'
+    const startButton = document.getElementById('startButton')
+    if (startButton.innerHTML === 'Stop') {
+      if (pauseButton.innerHTML === 'Pause') {
+        clearInterval(intervalID)
+        pauseButton.innerHTML = 'Weiter'
+      } else if (pauseButton.innerHTML === 'Weiter') {
+        countSeconds()
+        pauseButton.innerHTML = 'Pause'
+      }
     }
   }
 
