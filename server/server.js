@@ -56,6 +56,6 @@ app.patch('/recipes/:id', (req, res) => {
 
 app.delete('/recipes/:id', (req, res) => {
   Recipe.findByIdAndDelete(req.params.id)
-    .then((recipe) => res.json(recipe))
+    .then(res.json('Rezept wurde gelöscht.'))
     .catch((err) => res.json(err))
 })

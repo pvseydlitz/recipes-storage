@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+
+//import './react-confirm-alert.css'
 import Home from './home/Home'
 import Upload from './form/Upload'
-import { getRecipes, postRecipe, patchRecipe } from './services'
+
+import { getRecipes, postRecipe, patchRecipe, deleteRecipe } from './services'
 
 export default function App() {
   const [recipes, setRecipes] = useState([])
@@ -30,11 +35,33 @@ export default function App() {
     })
   }
 
+  function handleDelete(id) {
+    confirmAlert({
+      title: 'Löschen bestätigen',
+      message: 'Soll dieses Rezept wirklich gelöscht werden?',
+      buttons: [
+        {
+          label: 'Ja',
+          onClick: () => {
+            deleteRecipe(id).then((response) => {
+              getRecipes().then((recipes) => {
+                setRecipes(recipes)
+              })
+            })
+          },
+        },
+        {
+          label: 'Nein',
+          onClick: () => {},
+        },
+      ],
+    })
+  }
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <Home recipes={recipes}></Home>
+          <Home recipes={recipes} handleDelete={handleDelete}></Home>
         </Route>
         <Route path="/upload">
           <Upload

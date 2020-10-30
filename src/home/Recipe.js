@@ -6,8 +6,9 @@ import ModalArbeitsschritte from './ModalArbeitsschritte'
 
 import editIcon from '../icons/edit.svg'
 import playIcon from '../icons/playIcon.svg'
+import deleteIcon from '../icons/delete.svg'
 
-export default function Recipe({ recipe }) {
+export default function Recipe({ recipe, handleDelete }) {
   const data = recipe
 
   let kosten = ''
@@ -35,6 +36,7 @@ export default function Recipe({ recipe }) {
     const modal = document.getElementById(`modalDetails${recipe._id}`)
     modal.style.display = 'block'
   }
+
   return (
     <div>
       <Wrapper>
@@ -44,6 +46,11 @@ export default function Recipe({ recipe }) {
           src={playIcon}
           onClick={startCooking}
           style={{ right: '40px' }}
+        ></Icon>
+        <Icon
+          src={deleteIcon}
+          style={{ right: '70px' }}
+          onClick={() => handleDelete(data._id)}
         ></Icon>
         <Text>{data.beschreibung}</Text>
         {data.picture !== undefined ? (

@@ -8,10 +8,10 @@ import Recipe from './Recipe'
 
 import arrowUp from '../icons/arrowUp.svg'
 
-export default function Home({ recipes }) {
+export default function Home({ recipes, handleDelete }) {
   function scrollToTop() {
     const header = document.querySelector('#header')
-    header.scrollIntoView({block: "end", behavior: "smooth"})
+    header.scrollIntoView({ block: 'end', behavior: 'smooth' })
   }
 
   return (
@@ -21,7 +21,11 @@ export default function Home({ recipes }) {
         <Recipes>
           <Header title="Rezeptesammlung"></Header>
           {recipes.map((recipe, index) => (
-            <Recipe recipe={recipe} key={index}></Recipe>
+            <Recipe
+              recipe={recipe}
+              key={index}
+              handleDelete={handleDelete}
+            ></Recipe>
           ))}
         </Recipes>
         <Footer></Footer>
@@ -36,9 +40,9 @@ const Recipes = styled.div`
   position: relative;
 `
 const ArrowUp = styled.img`
-position: absolute;
-bottom: 80px;
-right: 20px;
-width: 30px;
-cursor: pointer;
+  position: absolute;
+  bottom: 80px;
+  right: 20px;
+  width: 30px;
+  cursor: pointer;
 `
