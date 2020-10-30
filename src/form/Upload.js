@@ -112,16 +112,20 @@ export default function Upload({ handleSubmit, handlePatch }) {
         const formDataPicture = new FormData()
         formDataPicture.append('photoUpload', selectedPicture)
         uploadPicture(formDataPicture).then((response) => {
-          console.log(response)
-          const picture = {}
-          picture.photoName = response.filename
-          picture.photoPath = response.path
-          picture.originalName = response.originalname
-          picture.type = response.mimetype
-          data.picture = picture
-          delete data.photoUpload
-          console.log(data)
-          handleSubmit(data)
+          if (response === 'Nur Bilddateien dürfen hochgeladen werden!') {
+            alert(response)
+          } else if (response === 'Kein Bild ausgewählt') {
+            handleSubmit(data)
+          } else {
+            const picture = {}
+            picture.photoName = response.filename
+            picture.photoPath = response.path
+            picture.originalName = response.originalname
+            picture.type = response.mimetype
+            data.picture = picture
+            delete data.photoUpload
+            handleSubmit(data)
+          }
         })
       }
     })

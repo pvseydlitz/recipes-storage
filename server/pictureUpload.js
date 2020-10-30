@@ -14,12 +14,32 @@ const storage = multer.diskStorage({
     )
   },
 })
-const upload = multer({ storage: storage })
 
-router.post('/uploadPicture', upload.single('photoUpload'), (req, res) => {
-  if (req.file) {
+const imageFilter = function (req, file, cb) {
+  // Accept images only
+  if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+    req.fileValidationError = 'Nur Bilddateien dürfen hochgeladen werden!'
+    return cb(new Error('Nur Bilddateien dürfen hochgeladen werden!'), false)
+  }
+  cb(null, true)
+}
+
+router.post('/uploadPicture', (req, res) => {
+  let upload = multer({ storage: storage, fileFilter: imageFilter }).single(
+    'photoUpload'
+  )
+  upload(req, res, function (err) {
+    if (req.fileValidationError) {
+      return res.json(req.fileValidationError)
+    } else if (!req.file) {
+      return res.json('Kein Bild ausgewählt')
+    } else if (err instanceof multer.MulterError) {
+      return res.send(err)
+    } else if (err) {
+      return res.send(err)
+    }
     res.json(req.file)
-  } else throw console.error()
+  })
 })
 
 module.exports = router

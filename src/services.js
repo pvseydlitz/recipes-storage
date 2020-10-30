@@ -39,14 +39,8 @@ export function deleteRecipe(id) {
 }
 
 export function uploadPicture(picture) {
-  return (
-    fetch('/api/uploadPicture', {
-      method: 'POST',
-      body: picture,
-    })
-      //.then((response) => response.text())
-      //.then((result) => console.log(result))
-      .then((res) => res.json())
-    //.catch((error) => console.log('error', error))
-  )
+  return fetch('/api/uploadPicture', {
+    method: 'POST',
+    body: picture,
+  }).then((res) => res.json())
 }
