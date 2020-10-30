@@ -102,12 +102,12 @@ export default function ModalArbeitsschritte({
     <OuterWrapper id={`modalStep${index + 1}${recipe._id}`}>
       <FlexBox>
         <Wrapper>
-          <Headline>Arbeitsschritt {index + 1}</Headline>
+          <Title>Arbeitsschritt {index + 1}</Title>
           <CloseIcon src={closeIcon} onClick={closeModal}></CloseIcon>
           <ArrowRight src={arrowRight} onClick={showNextModal}></ArrowRight>
           <ArrowLeft src={arrowLeft} onClick={showLastModal}></ArrowLeft>
-          <p>{arbeitsschritt}</p>
-          <FlexBox>
+          <Text>{arbeitsschritt}</Text>
+          <FlexBox style={{ margin: '0' }}>
             <Button onClick={() => setShowTimer(!showTimer)}>Timer</Button>
             {showTimer ? (
               <Grid>
@@ -168,13 +168,19 @@ const FlexBox = styled.div`
 `
 const Wrapper = styled.div`
   background: lightgrey;
-  padding: 10px;
+  padding: 15px;
   width: 100%;
   position: relative;
   border-radius: 15px;
 `
-const Headline = styled.h3`
+const Title = styled.h3`
   margin: 0;
+  margin-bottom: 5px;
+  font-weight: bold;
+`
+const Text = styled.p`
+  font-size: 14px;
+  margin: 10px 0;
 `
 const CloseIcon = styled.img`
   width: 30px;
@@ -213,7 +219,6 @@ const Button = styled.div`
   cursor: pointer;
   background: grey;
   color: white;
-  margin-bottom: 10px;
 `
 const Input = styled.input`
   display: inline-block;

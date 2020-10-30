@@ -22,7 +22,7 @@ export default function App() {
   function createRecipe(repiceData) {
     postRecipe(repiceData).then((recipe) => {
       setRecipes([recipe, ...recipes])
-      window.location.href = '/'
+      window.location.reload()
     })
   }
   function updateRecipe(recipeData) {
@@ -36,7 +36,7 @@ export default function App() {
         patchedRecipe,
         ...recipes.slice(index + 1),
       ])
-      window.location.href = '/'
+      window.location.reload()
     })
   }
 

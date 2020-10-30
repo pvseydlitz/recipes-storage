@@ -19,17 +19,17 @@ export default function ModalDetailsRecipe({ recipe }) {
     <OuterWrapper id={`modalDetails${recipe._id}`}>
       <FlexBox>
         <Wrapper>
-          <Headline>{recipe.titel}</Headline>
+          <Title>{recipe.titel}</Title>
           <CloseIcon src={closeIcon} onClick={closeModal}></CloseIcon>
           <ArrowRight src={arrowRight} onClick={showNextModal}></ArrowRight>
           <Headline>Benötigte Zutaten</Headline>
-          <ul>
+          <List>
             {recipe.zutaten.map((zutat, index) => (
               <li key={index}>
                 {zutat.menge} {zutat.einheit} {zutat.produkt}
               </li>
             ))}
-          </ul>
+          </List>
         </Wrapper>
       </FlexBox>
     </OuterWrapper>
@@ -54,12 +54,23 @@ const FlexBox = styled.div`
 const Wrapper = styled.div`
   background: lightgrey;
   margin: 15px;
-  padding: 10px;
+  padding: 15px;
   width: 100%;
   position: relative;
   border-radius: 15px;
 `
-const Headline = styled.h3`
+const Title = styled.h3`
+  margin: 0;
+  margin-bottom: 5px;
+  font-weight: bold;
+`
+const Headline = styled.p`
+  font-size: 14px;
+  margin: 10px 0 5px 0;
+  font-weight: bold;
+  display: inline-block;
+`
+const List = styled.ul`
   margin: 0;
 `
 const CloseIcon = styled.img`

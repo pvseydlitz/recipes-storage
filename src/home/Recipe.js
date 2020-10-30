@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
 import ModalDetailsRecipe from './ModalDetailsRecipe'
@@ -9,6 +9,7 @@ import playIcon from '../icons/playIcon.svg'
 import deleteIcon from '../icons/delete.svg'
 
 export default function Recipe({ recipe, handleDelete }) {
+  const [pictureFullScreen, setPictureFullSreen] = useState(false)
   const data = recipe
 
   let kosten = ''
@@ -40,48 +41,56 @@ export default function Recipe({ recipe, handleDelete }) {
   return (
     <div>
       <Wrapper>
-        <Title>{data.titel}</Title>
-        <Icon src={editIcon} onClick={clickEditButton}></Icon>
-        <Icon
-          src={playIcon}
-          onClick={startCooking}
-          style={{ right: '40px' }}
-        ></Icon>
-        <Icon
-          src={deleteIcon}
-          style={{ right: '70px' }}
-          onClick={() => handleDelete(data)}
-        ></Icon>
+        <GridTitle>
+          <Title>{data.titel}</Title>
+          <Icon src={editIcon} onClick={clickEditButton}></Icon>
+          <Icon src={playIcon} onClick={startCooking}></Icon>
+          <Icon src={deleteIcon} onClick={() => handleDelete(data)}></Icon>
+        </GridTitle>
         <Text>{data.beschreibung}</Text>
         {data.picture !== undefined ? (
           <FlexBox>
             <Image
               src={require(`../../server/uploads/images/${data.picture.photoName}`)}
+              onClick={() => setPictureFullSreen(true)}
             ></Image>
           </FlexBox>
         ) : (
           ''
         )}
-
-        <Headline>Benötigte Zutaten</Headline>
-        <ul>
-          {data.zutaten.map((zutat, index) => (
-            <li key={index}>
-              {zutat.menge} {zutat.einheit} {zutat.produkt}
-            </li>
+        {pictureFullScreen ? (
+          <FullScreenBackground>
+            <WhiteBackground
+              onClick={() => setPictureFullSreen(false)}
+            ></WhiteBackground>
+            <ImageFullScreen
+              src={require(`../../server/uploads/images/${data.picture.photoName}`)}
+            ></ImageFullScreen>
+            <WhiteBackground
+              onClick={() => setPictureFullSreen(false)}
+            ></WhiteBackground>
+          </FullScreenBackground>
+        ) : (
+          ''
+        )}
+        <div>
+          <Headlines>Benötigte Zutaten:</Headlines>
+          <Text>&nbsp;{data.zutaten.length} Produkte</Text>
+        </div>
+        <div>
+          <Headlines>Arbeitsschritte:</Headlines>
+          <Text>&nbsp;{data.arbeitsschritte.length}</Text>
+        </div>
+        <Headlines>Aufwand:</Headlines>
+        <Text>&nbsp;{data.aufwand}</Text>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <Headlines>Kosten:</Headlines>
+        <Text>&nbsp;{kosten}</Text>
+        <div>
+          {data.kategorien.map((kategorie, index) => (
+            <Kategorie key={index}>{kategorie}</Kategorie>
           ))}
-        </ul>
-        <Headline>Arbeitsschritte</Headline>
-        <ol>
-          {data.arbeitsschritte.map((arbeitsschritt, index) => (
-            <li key={index}>{arbeitsschritt}</li>
-          ))}
-        </ol>
-        {data.kategorien.map((kategorie, index) => (
-          <Kategorie key={index}>{kategorie}</Kategorie>
-        ))}
-        <Text>Aufwand: {data.aufwand}</Text>
-        <Text>Kosten: {kosten}</Text>
+        </div>
       </Wrapper>
       <ModalDetailsRecipe recipe={recipe}></ModalDetailsRecipe>
       {data.arbeitsschritte.map((arbeitsschritt, index) => (
@@ -100,30 +109,40 @@ const Wrapper = styled.div`
   background-color: lightgrey;
   border-radius: 15px;
   margin: 15px;
-  padding: 10px;
+  padding: 15px;
   position: relative;
+`
+const GridTitle = styled.div`
+  max-width: 100%;
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: 1fr repeat(3, 30px);
+`
+const Title = styled.h3`
+  margin: 0;
+  margin-bottom: 5px;
+  font-weight: bold;
 `
 const Icon = styled.img`
   width: 30px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
   cursor: pointer;
 `
-const Title = styled.p`
-  margin: 0;
-  font-weight: bold;
-`
-const Text = styled.div`
+const Headlines = styled.p`
   font-size: 14px;
+  margin: 10px 0 5px 0;
+  font-weight: bold;
+  display: inline-block;
 `
-const Headline = styled.h3``
-
+const Text = styled.p`
+  font-size: 14px;
+  margin: 0;
+  display: inline-block;
+`
 const Kategorie = styled.div`
   background-color: grey;
   padding: 5px 10px;
   display: inline-block;
-  margin: 10px;
+  margin: 10px 10px 0 0;
   border-radius: 5px;
 `
 const FlexBox = styled.div`
@@ -133,4 +152,24 @@ const FlexBox = styled.div`
 const Image = styled.img`
   width: auto;
   height: 100px;
+`
+const ImageFullScreen = styled.img`
+  width: 100%;
+  height: auto;
+  z-index: 2;
+`
+const FullScreenBackground = styled.div`
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+`
+const WhiteBackground = styled.div`
+  background: white;
+  opacity: 95%;
 `
