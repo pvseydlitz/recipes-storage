@@ -44,3 +44,13 @@ export function uploadPicture(picture) {
     body: picture,
   }).then((res) => res.json())
 }
+
+export function deletePicture(data) {
+  if (data.picture !== undefined) {
+    const photoName = data.picture.photoName
+    return fetch('/api/uploadPicture', {
+      method: 'DELETE',
+      body: photoName,
+    }).then((res) => res.json())
+  }
+}

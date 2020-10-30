@@ -1,4 +1,4 @@
-export function showMoreInputFields() {
+export function showMoreInputFields(serverMethod) {
   const numberOfInputs = document.querySelectorAll('.GridZutaten').length
   const searchedElement = numberOfInputs + 1
   const number = numberOfInputs + 2
@@ -20,10 +20,13 @@ export function showMoreInputFields() {
               <input class="Input" type="text" name="produkt${number}" id="produkt${number}"></input>
         `
   el.insertAdjacentElement('afterend', newInput)
-  document.getElementById(`menge${number}`).focus()
+  if (serverMethod === 'patch') {
+  } else {
+    document.getElementById(`menge${number}`).focus()
+  }
 }
 
-export function showMoreTextAreas() {
+export function showMoreTextAreas(serverMethod) {
   const numberOfInputs = document.querySelectorAll('.GridTextareas').length
   const searchedElement = numberOfInputs + 1 + 10
   const number = numberOfInputs + 2
@@ -36,5 +39,8 @@ export function showMoreTextAreas() {
         <textarea rows="3" class="Textarea" name="arbeitsschritt${number}" id="arbeitsschritt${number}"></textarea>
     `
   el.insertAdjacentElement('afterend', newTextArea)
-  document.getElementById(`arbeitsschritt${number}`).focus()
+  if (serverMethod === 'patch') {
+  } else {
+    document.getElementById(`arbeitsschritt${number}`).focus()
+  }
 }

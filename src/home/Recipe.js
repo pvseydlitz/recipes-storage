@@ -50,7 +50,7 @@ export default function Recipe({ recipe, handleDelete }) {
         <Icon
           src={deleteIcon}
           style={{ right: '70px' }}
-          onClick={() => handleDelete(data._id)}
+          onClick={() => handleDelete(data)}
         ></Icon>
         <Text>{data.beschreibung}</Text>
         {data.picture !== undefined ? (

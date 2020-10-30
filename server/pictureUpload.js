@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const multer = require('multer')
 const path = require('path')
+const fs = require('file-system')
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -40,6 +41,17 @@ router.post('/uploadPicture', (req, res) => {
     }
     res.json(req.file)
   })
+})
+
+router.delete('/uploadPicture', (req, res) => {
+  const photoName = req.body.photoName
+  const path = `./uploads/images/${photoName}`
+  try {
+    fs.unlinkSync(path)
+    res.json('Bild erfolgreich gelöscht')
+  } catch (err) {
+    res.json('Fehler beim Löschen des Bildes')
+  }
 })
 
 module.exports = router

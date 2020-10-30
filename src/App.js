@@ -3,11 +3,16 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
-//import './react-confirm-alert.css'
 import Home from './home/Home'
 import Upload from './form/Upload'
 
-import { getRecipes, postRecipe, patchRecipe, deleteRecipe } from './services'
+import {
+  getRecipes,
+  postRecipe,
+  patchRecipe,
+  deleteRecipe,
+  deletePicture,
+} from './services'
 
 export default function App() {
   const [recipes, setRecipes] = useState([])
@@ -35,7 +40,7 @@ export default function App() {
     })
   }
 
-  function handleDelete(id) {
+  function handleDelete(data) {
     confirmAlert({
       title: 'Löschen bestätigen',
       message: 'Soll dieses Rezept wirklich gelöscht werden?',
@@ -43,10 +48,18 @@ export default function App() {
         {
           label: 'Ja',
           onClick: () => {
-            deleteRecipe(id).then((response) => {
-              getRecipes().then((recipes) => {
-                setRecipes(recipes)
-              })
+            deleteRecipe(data._id).then(() => {
+              if (data.picture !== undefined) {
+                deletePicture(data).then(() => {
+                  getRecipes().then((recipes) => {
+                    setRecipes(recipes)
+                  })
+                })
+              } else {
+                getRecipes().then((recipes) => {
+                  setRecipes(recipes)
+                })
+              }
             })
           },
         },

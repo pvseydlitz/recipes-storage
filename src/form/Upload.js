@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 import './upload.css'
 import Grid from '../Grid'
 import Header from '../Header'
@@ -37,12 +39,12 @@ export default function Upload({ handleSubmit, handlePatch }) {
           recipeAsObject.zutaten[i - 1].einheit
         document.querySelector(`#produkt${i}`).value =
           recipeAsObject.zutaten[i - 1].produkt
-        showMoreInputFields()
+        showMoreInputFields('patch')
       }
       for (let i = 1; i <= recipeAsObject.arbeitsschritte.length; i++) {
         document.querySelector(`#arbeitsschritt${i}`).value =
           recipeAsObject.arbeitsschritte[i - 1]
-        showMoreTextAreas()
+        showMoreTextAreas('patch')
       }
       const ids = [20, 21, 22, 23, 24]
       ids.forEach((id, index) => {
@@ -53,6 +55,7 @@ export default function Upload({ handleSubmit, handlePatch }) {
       document.getElementById('kosten').value = recipeAsObject.kosten
       document.getElementById('aufwand').value = recipeAsObject.aufwand
       document.getElementById('id').value = recipeAsObject._id
+      document.getElementById('foto').innerHTML = 'Foto Ändern'
       localStorage.removeItem('recipe to edit')
     }
   }
@@ -106,30 +109,68 @@ export default function Upload({ handleSubmit, handlePatch }) {
       data.zutaten = zutaten
       data.arbeitsschritte = arbeitsschritte
       data.kategorien = kategorien
-      if (exists === true) {
-        handlePatch(data)
-      } else {
-        const formDataPicture = new FormData()
-        formDataPicture.append('photoUpload', selectedPicture)
-        uploadPicture(formDataPicture).then((response) => {
-          if (response === 'Nur Bilddateien dürfen hochgeladen werden!') {
-            alert(response)
-          } else if (response === 'Kein Bild ausgewählt') {
-            handleSubmit(data)
-          } else {
-            const picture = {}
-            picture.photoName = response.filename
-            picture.photoPath = response.path
-            picture.originalName = response.originalname
-            picture.type = response.mimetype
-            data.picture = picture
-            delete data.photoUpload
-            handleSubmit(data)
-          }
-        })
-      }
+
+      const formDataPicture = new FormData()
+      formDataPicture.append('photoUpload', selectedPicture)
+
+      confirmAlert({
+        title: 'Upload Bestätigen',
+        message: 'Soll dieses Rezept wirklich hochgeladen werden?',
+        buttons: [
+          {
+            label: 'Ja',
+            onClick: () => {
+              uploadPicture(formDataPicture).then((response) => {
+                if (response === 'Nur Bilddateien dürfen hochgeladen werden!') {
+                  wrongFileType(response)
+                } else if (response === 'Kein Bild ausgewählt') {
+                  if (exists === true) {
+                    console.log('patch kein Bild')
+                    handlePatch(data)
+                  } else {
+                    console.log('submit kein Bild')
+                    handleSubmit(data)
+                  }
+                } else {
+                  const picture = {}
+                  picture.photoName = response.filename
+                  picture.photoPath = response.path
+                  picture.originalName = response.originalname
+                  picture.type = response.mimetype
+                  data.picture = picture
+                  delete data.photoUpload
+                  if (exists === true) {
+                    console.log('patch mit Bild')
+                    handlePatch(data)
+                  } else {
+                    console.log('submit mit Bild')
+                    handleSubmit(data)
+                  }
+                }
+              })
+            },
+          },
+          {
+            label: 'Nein',
+            onClick: () => {},
+          },
+        ],
+      })
     })
   }
+  function wrongFileType(response) {
+    confirmAlert({
+      title: response,
+      message: 'Erlaubte Dateiformate: jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF',
+      buttons: [
+        {
+          label: 'Schließen',
+          onClick: () => {},
+        },
+      ],
+    })
+  }
+
   function handlePicture(event) {
     if (event.target.files.length > 0) {
       setPicture(event.target.files[0].name)
@@ -169,7 +210,7 @@ export default function Upload({ handleSubmit, handlePatch }) {
             <DropdownAufwand></DropdownAufwand>
           </GridColumn>
           <GridColumn>
-            <Headline0Margin>Foto hochladen</Headline0Margin>
+            <Headline0Margin id="foto">Foto hochladen</Headline0Margin>
             <Label htmlFor="photoUpload">
               <FileUploadIcon src={uploadIcon}></FileUploadIcon>
               <InputFile
@@ -181,7 +222,7 @@ export default function Upload({ handleSubmit, handlePatch }) {
               <ChoosenPicture>&nbsp;&nbsp;{picture}</ChoosenPicture>
             </Label>
           </GridColumn>
-          <GridColumn>
+          <GridColumn style={{ display: 'none' }}>
             <Headline0Margin>ID</Headline0Margin>
             <Input name="id" id="id" readOnly={true}></Input>
           </GridColumn>
