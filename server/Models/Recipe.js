@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const recipeShema = {
+  datum: String,
   titel: String,
   beschreibung: String,
   zutaten: Array,

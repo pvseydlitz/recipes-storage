@@ -64,62 +64,63 @@ export default function Upload({ handleSubmit, handlePatch }) {
     const form = event.target
     const formData = new FormData(form)
     const data = Object.fromEntries(formData)
+    const date = new Date()
+    data.datum = date
     let id = 0
     data.id === '' ? (id = 1) : (id = data.id)
 
-    checkIfRecipeExists(id).then((exists) => {
-      let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-      let zutaten = []
-      let arbeitsschritte = []
-      let kategorien = []
-      numbers.forEach((number) => {
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    let zutaten = []
+    let arbeitsschritte = []
+    let kategorien = []
+    numbers.forEach((number) => {
+      let menge = 'menge' + String(number)
+      if (menge in data === true) {
         let menge = 'menge' + String(number)
-        if (menge in data === true) {
-          let menge = 'menge' + String(number)
-          let einheit = 'einheit' + String(number)
-          let produkt = 'produkt' + String(number)
-          let zutat = {
-            menge: data[menge],
-            einheit: data[einheit],
-            produkt: data[produkt],
-          }
-          if (
-            zutat.menge !== '' &&
-            zutaten.einheit !== '' &&
-            zutaten.produkt !== ''
-          ) {
-            zutaten.push(zutat)
-          }
-          delete data[menge]
-          delete data[einheit]
-          delete data[produkt]
+        let einheit = 'einheit' + String(number)
+        let produkt = 'produkt' + String(number)
+        let zutat = {
+          menge: data[menge],
+          einheit: data[einheit],
+          produkt: data[produkt],
         }
-        let arbeitsschritt = 'arbeitsschritt' + String(number)
-        if (arbeitsschritt in data === true && data[arbeitsschritt] !== '') {
-          arbeitsschritte.push(data[arbeitsschritt])
-          delete data[arbeitsschritt]
+        if (
+          zutat.menge !== '' &&
+          zutaten.einheit !== '' &&
+          zutaten.produkt !== ''
+        ) {
+          zutaten.push(zutat)
         }
-        let kategorie = 19 + number
+        delete data[menge]
+        delete data[einheit]
+        delete data[produkt]
+      }
+      let arbeitsschritt = 'arbeitsschritt' + String(number)
+      if (arbeitsschritt in data === true && data[arbeitsschritt] !== '') {
+        arbeitsschritte.push(data[arbeitsschritt])
+        delete data[arbeitsschritt]
+      }
+      let kategorie = 19 + number
 
-        if (kategorie in data === true) {
-          kategorien.push(data[kategorie])
-          delete data[kategorie]
-        }
-      })
-      data.zutaten = zutaten
-      data.arbeitsschritte = arbeitsschritte
-      data.kategorien = kategorien
+      if (kategorie in data === true) {
+        kategorien.push(data[kategorie])
+        delete data[kategorie]
+      }
+    })
+    data.zutaten = zutaten
+    data.arbeitsschritte = arbeitsschritte
+    data.kategorien = kategorien
+    const formDataPicture = new FormData()
+    formDataPicture.append('photoUpload', selectedPicture)
 
-      const formDataPicture = new FormData()
-      formDataPicture.append('photoUpload', selectedPicture)
-
-      confirmAlert({
-        title: 'Upload Bestätigen',
-        message: 'Soll dieses Rezept wirklich hochgeladen werden?',
-        buttons: [
-          {
-            label: 'Ja',
-            onClick: () => {
+    confirmAlert({
+      title: 'Upload Bestätigen',
+      message: 'Soll dieses Rezept wirklich hochgeladen werden?',
+      buttons: [
+        {
+          label: 'Ja',
+          onClick: () => {
+            checkIfRecipeExists(id).then((exists) => {
               uploadPicture(formDataPicture).then((response) => {
                 if (response === 'Nur Bilddateien dürfen hochgeladen werden!') {
                   wrongFileType(response)
@@ -129,6 +130,7 @@ export default function Upload({ handleSubmit, handlePatch }) {
                     handlePatch(data)
                   } else {
                     console.log('submit kein Bild')
+                    console.log(data)
                     handleSubmit(data)
                   }
                 } else {
@@ -148,14 +150,14 @@ export default function Upload({ handleSubmit, handlePatch }) {
                   }
                 }
               })
-            },
+            })
           },
-          {
-            label: 'Nein',
-            onClick: () => {},
-          },
-        ],
-      })
+        },
+        {
+          label: 'Nein',
+          onClick: () => {},
+        },
+      ],
     })
   }
   function wrongFileType(response) {

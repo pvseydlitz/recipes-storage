@@ -37,7 +37,7 @@ export default function Recipe({ recipe, handleDelete }) {
     const modal = document.getElementById(`modalDetails${recipe._id}`)
     modal.style.display = 'block'
   }
-
+  console.log(data.datum)
   return (
     <div>
       <Wrapper>
@@ -86,6 +86,13 @@ export default function Recipe({ recipe, handleDelete }) {
         &nbsp;&nbsp;&nbsp;&nbsp;
         <Headlines>Kosten:</Headlines>
         <Text>&nbsp;{kosten}</Text>
+        <div>
+          <Headlines>Hinzugefügt am:</Headlines>
+          <Text>
+            &nbsp;{data.datum.slice(8, 10)}.{data.datum.slice(5, 7)}.
+            {data.datum.slice(0, 4)}
+          </Text>
+        </div>
         <div>
           {data.kategorien.map((kategorie, index) => (
             <Kategorie key={index}>{kategorie}</Kategorie>
@@ -152,6 +159,7 @@ const FlexBox = styled.div`
 const Image = styled.img`
   width: auto;
   height: 100px;
+  cursor: pointer;
 `
 const ImageFullScreen = styled.img`
   width: 100%;
@@ -172,4 +180,5 @@ const FullScreenBackground = styled.div`
 const WhiteBackground = styled.div`
   background: white;
   opacity: 95%;
+  cursor: pointer;
 `
