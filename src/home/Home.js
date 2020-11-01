@@ -62,9 +62,18 @@ export default function Home({ recipes, handleDelete }) {
               return query === '' || title.includes(query)
             })
             .filter((recipe) => {
-              const kategorien = recipe.kategorien.join('')
-              const query = filteredCategories.join('')
-              return filteredCategories === [] || kategorien.includes(query)
+              let kategorien = []
+              recipe.kategorien.forEach((a) => {
+                const index = filteredCategories.findIndex((b) => b === a)
+                if (index !== -1) {
+                  kategorien.push(filteredCategories[index])
+                }
+              })
+              const query = filteredCategories.sort().join('')
+              const kategorienString = kategorien.sort().join('')
+              return (
+                filteredCategories === [] || kategorienString.includes(query)
+              )
             })
 
             .map((recipe, index) => (
