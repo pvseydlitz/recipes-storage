@@ -126,11 +126,8 @@ export default function Upload({ handleSubmit, handlePatch }) {
                   wrongFileType(response)
                 } else if (response === 'Kein Bild ausgewählt') {
                   if (exists === true) {
-                    console.log('patch kein Bild')
                     handlePatch(data)
                   } else {
-                    console.log('submit kein Bild')
-                    console.log(data)
                     handleSubmit(data)
                   }
                 } else {
@@ -142,10 +139,8 @@ export default function Upload({ handleSubmit, handlePatch }) {
                   data.picture = picture
                   delete data.photoUpload
                   if (exists === true) {
-                    console.log('patch mit Bild')
                     handlePatch(data)
                   } else {
-                    console.log('submit mit Bild')
                     handleSubmit(data)
                   }
                 }
@@ -184,7 +179,7 @@ export default function Upload({ handleSubmit, handlePatch }) {
   return (
     <Grid>
       <Wrapper>
-        <Header title="Neues Rezept hinzufügen"></Header>
+        <Header title="Neues Rezept hinzufügen" showFilter={false}></Header>
         <Form
           onSubmit={(event) => uploadRecipe(event)}
           enctype="multipart/form-data"

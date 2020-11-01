@@ -37,7 +37,6 @@ export default function Recipe({ recipe, handleDelete }) {
     const modal = document.getElementById(`modalDetails${recipe._id}`)
     modal.style.display = 'block'
   }
-  console.log(data.datum)
   return (
     <div>
       <Wrapper>
