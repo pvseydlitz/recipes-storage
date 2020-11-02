@@ -15,16 +15,18 @@ import Ingridients from './Ingridients'
 import uploadIcon from '../icons/upload.svg'
 
 import { showMoreInputFields, showMoreTextAreas } from './functions'
-import { checkIfRecipeExists, uploadPicture } from '../services'
+import { checkIfRecipeExists, uploadPicture, getCategories } from '../services'
 
 export default function Upload({ handleSubmit, handlePatch }) {
-  useEffect(() => {
-    fillOutInputForEditing()
-  })
+  const [categories, setCategories] = useState([])
   const [picture, setPicture] = useState('Kein Foto ausgewhält')
   const [selectedPicture, setSelectedPicture] = useState(null)
 
-  const categories = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
+  useEffect(() => {
+    fillOutInputForEditing()
+    getCategories().then(setCategories)
+  })
+
   function fillOutInputForEditing() {
     const recipeToEdit = localStorage.getItem('recipe to edit')
     const recipeAsObject = JSON.parse(recipeToEdit)
@@ -271,7 +273,8 @@ const ChoosenPicture = styled.span`
   font-style: italic;
 `
 const CheckBoxes = styled.div`
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
 `
 const GridColumn = styled.div`
   display: grid;

@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import Checkbox from './Checkbox'
+import { getCategories } from '../services'
 
 export default function FilterMenu({ searchTitle, filterCategories }) {
-  const categories = ['Fisch', 'Fleisch', 'Vegetarisch', 'Pasta', 'Salat']
+  const [categories, setCategories] = useState([])
+  useEffect(() => {
+    getCategories().then(setCategories)
+  }, [])
 
   return (
     <Wrapper>
@@ -37,5 +41,6 @@ const Input = styled.input`
   margin-bottom: 20px;
 `
 const CheckBoxes = styled.div`
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
 `

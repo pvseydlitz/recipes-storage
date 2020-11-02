@@ -20,6 +20,9 @@ app.use(express.json())
 const pictureUpload = require('./pictureUpload')
 app.use('/api/', pictureUpload)
 
+const categories = require('./category')
+app.use(categories)
+
 app.listen(3333, () => console.log('Express ready on port 3333'))
 
 app.get('/recipes', (req, res) => {

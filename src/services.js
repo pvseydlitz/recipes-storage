@@ -54,3 +54,7 @@ export function deletePicture(data) {
     }).then((res) => res.json())
   }
 }
+
+export function getCategories() {
+  return fetch('/categories').then((res) => res.json())
+}
