@@ -4,6 +4,8 @@ const express = require('express')
 
 mongoose.connect('mongodb://localhost:27017/recipes', {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
 })
 const app = express()
 

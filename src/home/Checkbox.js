@@ -2,7 +2,12 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 
-export default function Checkbox({ name, number, filterCategories }) {
+export default function Checkbox({
+  name,
+  number,
+  filterCategories,
+  resetFilter,
+}) {
   const [checked, setChecked] = useState(false)
   function handleChange(event) {
     setChecked(!checked)
@@ -13,7 +18,7 @@ export default function Checkbox({ name, number, filterCategories }) {
     }
   }
   return (
-    <Label htmlFor={number} active={checked}>
+    <Label htmlFor={number} active={checked} id={'1' + number}>
       {name}
       <Tag
         type="checkbox"
@@ -39,4 +44,5 @@ const Tag = styled.input`
 Checkbox.propTypes = {
   name: PropTypes.string,
   number: PropTypes.number,
+  resetFilter: PropTypes.bool,
 }

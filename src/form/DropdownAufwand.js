@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-export default function DropdownEinheiten() {
+export default function DropdownAufwand() {
   return (
     <DropDown name="aufwand" id="aufwand">
       <option value="0-10 min">0-10 min</option>

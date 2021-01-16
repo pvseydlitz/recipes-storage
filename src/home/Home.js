@@ -20,6 +20,8 @@ export default function Home({ recipes, handleDelete }) {
   }
   const [searchedTitle, setSearchedTitle] = useState('')
   const [filteredCategories, setFilteredCategories] = useState([])
+  const [filteredTime, setFilteredTime] = useState('')
+  const [filteredCosts, setFilteredCosts] = useState('')
 
   function handleCategoryFilter(value, method) {
     if (method === 'push') {
@@ -34,7 +36,13 @@ export default function Home({ recipes, handleDelete }) {
       ])
     }
   }
-
+  function resetFilter() {
+    console.log('reset filter')
+    setSearchedTitle('')
+    setFilteredCategories([])
+    setFilteredCosts('')
+    setFilteredTime('')
+  }
   return (
     <div>
       <Globalstyles></Globalstyles>
@@ -51,6 +59,9 @@ export default function Home({ recipes, handleDelete }) {
               filterCategories={(value, method) =>
                 handleCategoryFilter(value, method)
               }
+              filterTime={(event) => setFilteredTime(event.target.value)}
+              filterCosts={(event) => setFilteredCosts(event.target.value)}
+              resetFilter={resetFilter}
             ></FilterMenu>
           ) : (
             ''
@@ -73,6 +84,16 @@ export default function Home({ recipes, handleDelete }) {
               const kategorienString = kategorien.sort().join('')
               return (
                 filteredCategories === [] || kategorienString.includes(query)
+              )
+            })
+            .filter((recipe) => {
+              return (
+                filteredTime === '' || recipe.aufwand.includes(filteredTime)
+              )
+            })
+            .filter((recipe) => {
+              return (
+                filteredCosts === '' || recipe.kosten.includes(filteredCosts)
               )
             })
 
