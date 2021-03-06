@@ -17,12 +17,53 @@ export function showMoreInputFields(serverMethod) {
                 <option value="EL">EL</option>
                 <option value="TL">TL</option>
               </select>
-              <input class="Input" type="text" name="produkt${number}" id="produkt${number}"></input>
+              <input class="Input" type="text" name="produkt${number}" id="produkt${number}" list="produktList${number}"></input>
         `
   el.insertAdjacentElement('afterend', newInput)
   if (serverMethod === 'patch') {
   } else {
     document.getElementById(`menge${number}`).focus()
+  }
+  addDataList(number)
+}
+
+function addDataList(number) {
+  fetch('/api/productNames').then((res) =>
+    res.json().then((products) => {
+      const inputProduct = document.getElementById(`produkt${number}`)
+      const dataList = document.createElement('datalist')
+      dataList.id = `produktList${number}`
+
+      products.forEach((product) => {
+        const el = document.createElement('option')
+        el.value = product
+        dataList.appendChild(el)
+        console.log(dataList)
+      })
+      inputProduct.insertAdjacentElement('afterend', dataList)
+      inputProduct.addEventListener('input', (event) => {
+        checkInput(event, products, number)
+      })
+    })
+  )
+}
+let inputLength = 0
+function checkInput(event, products, number) {
+  const input = event.target.value
+  const filteredProducts = products.filter((product) =>
+    product.toLowerCase().includes(input.toLowerCase())
+  )
+  const inputField = document.getElementById(`produkt${number}`)
+  inputField.value = input
+  if (input.length <= inputLength) {
+    inputField.value = input
+    inputLength = input.length
+  } else {
+    inputLength = input.length
+    if (filteredProducts.length === 1) {
+      inputField.value = filteredProducts[0]
+      inputLength = filteredProducts[0].length
+    }
   }
 }
 

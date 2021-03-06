@@ -59,6 +59,6 @@ export function getCategories() {
   return fetch('/categories').then((res) => res.json())
 }
 
-export function getProducts() {
-  return fetch('/api/products').then((res) => res.json())
+export function getProductNames() {
+  return fetch('/api/productNames').then((res) => res.json())
 }

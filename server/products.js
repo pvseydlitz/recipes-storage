@@ -1,14 +1,14 @@
 const router = require('express').Router()
 const Product = require('./Models/Product.js')
 
-router.get('/products', (req, res) => {
+router.get('/productNames', (req, res) => {
   Product.find()
-    .then((products) => {
-      /* let categoriesArray = []
-      categories.forEach((category) => {
-        categoriesArray.push(category.name)
-      }) */
-      res.json(products)
+    .then((loadedProducts) => {
+      let productNames = []
+      loadedProducts.forEach((loadedProduct) => {
+        productNames.push(loadedProduct.name)
+      })
+      res.json(productNames)
     })
     .catch((err) => res.json(err))
 })

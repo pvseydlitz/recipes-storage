@@ -3,18 +3,12 @@ import styled from 'styled-components/macro'
 import DropdownEinheiten from './DropdownEinheiten'
 import Icons from './Icons'
 import { showMoreInputFields } from './functions'
-import { getProducts } from '../services.js'
+import { getProductNames } from '../services.js'
 
 export default function Ingridients() {
   const [products, setProducts] = useState([])
   useEffect(() => {
-    getProducts().then((loadedProducts) => {
-      let productNames = []
-      loadedProducts.forEach((loadedProduct) =>
-        productNames.push(loadedProduct.name)
-      )
-      setProducts(productNames)
-    })
+    getProductNames().then(setProducts)
   }, [])
   function hideLastInputField() {
     let numberOfInputs = document.querySelectorAll('.GridZutaten').length + 1
@@ -55,11 +49,11 @@ export default function Ingridients() {
           type="text"
           name="produkt1"
           id="produkt1"
-          list="products"
+          list="products1"
           autoComplete="off"
           onChange={(event) => checkInput(event)}
         ></Input>
-        <datalist id="products">
+        <datalist id="products1">
           {products.map((product, index) => (
             <option value={product} key={index}></option>
           ))}
