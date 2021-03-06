@@ -58,3 +58,7 @@ export function deletePicture(data) {
 export function getCategories() {
   return fetch('/categories').then((res) => res.json())
 }
+
+export function getProducts() {
+  return fetch('/api/products').then((res) => res.json())
+}
