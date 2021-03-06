@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import './upload.css'
+import Globalstyles from '../Globalstyles'
 import Grid from '../Grid'
 import Header from '../Header'
 import Footer from '../Footer'
@@ -23,8 +24,10 @@ export default function Upload({ handleSubmit, handlePatch }) {
   const [selectedPicture, setSelectedPicture] = useState(null)
 
   useEffect(() => {
-    fillOutInputForEditing()
-    getCategories().then(setCategories)
+    getCategories().then((loadedCategories) => {
+      setCategories(loadedCategories)
+      fillOutInputForEditing()
+    })
   })
 
   function fillOutInputForEditing() {
@@ -180,6 +183,7 @@ export default function Upload({ handleSubmit, handlePatch }) {
   }
   return (
     <Grid>
+      <Globalstyles></Globalstyles>
       <Wrapper>
         <Header title="Neues Rezept hinzufügen" showFilter={false}></Header>
         <Form

@@ -8,15 +8,16 @@ export default function FilterMenu({
   filterCategories,
   filterTime,
   filterCosts,
-  resetFilter,
+  //resetFilter,
 }) {
   const [categories, setCategories] = useState([])
   useEffect(() => {
     getCategories().then(setCategories)
   }, [])
-  const [resetCheckbox, setResetCheckbox] = useState(false)
+  //const [resetCheckbox, setResetCheckbox] = useState(false)
   function resetFilterValues() {
-    setResetCheckbox(true)
+    window.location.href = '/'
+    /* setResetCheckbox(true)
     document.getElementById('kosten').value = ''
     document.getElementById('aufwand').value = ''
     document.getElementById('searchTitle').value = ''
@@ -27,7 +28,7 @@ export default function FilterMenu({
       document.getElementById(`1${i}`).style.background = 'lightgrey'
     }
 
-    resetFilter()
+    resetFilter() */
   }
 
   return (
@@ -42,7 +43,7 @@ export default function FilterMenu({
           <Checkbox
             name={categorie}
             number={index}
-            resetFilter={resetCheckbox}
+            //resetFilter={resetCheckbox}
             key={index}
             filterCategories={filterCategories}
           ></Checkbox>
@@ -81,7 +82,7 @@ export default function FilterMenu({
 }
 const Wrapper = styled.div`
   background: white;
-  height: 200px;
+  height: 220px;
   width: 100%;
   padding: 15px;
 `

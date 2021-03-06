@@ -2,10 +2,9 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import DropdownEinheiten from './DropdownEinheiten'
 import Icons from './Icons'
-import {showMoreInputFields} from './functions'
+import { showMoreInputFields } from './functions'
 
 export default function Ingridients() {
-
   function hideLastInputField() {
     let numberOfInputs = document.querySelectorAll('.GridZutaten').length + 1
     if (numberOfInputs > 1) {
@@ -39,7 +38,7 @@ const Headline = styled.h4`
   margin: 0%;
 `
 const Input = styled.input`
-  height: 20px;
+  height: 26px;
   width: auto;
   border: solid 2px black;
 `

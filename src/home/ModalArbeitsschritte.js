@@ -42,11 +42,29 @@ export default function ModalArbeitsschritte({
 
   function setMinutes(event) {
     const minutesSpan = document.getElementById('minutes')
-    minutesSpan.innerHTML = event.target.value
+    if (
+      event.target.value === '' ||
+      event.target.value.length > 3 ||
+      event.target.value < 0
+    ) {
+      minutesSpan.innerHTML = '00'
+    } else {
+      minutesSpan.innerHTML = event.target.value
+    }
   }
   function setSeconds(event) {
     const secondsSpan = document.getElementById('seconds')
-    secondsSpan.innerHTML = event.target.value
+    if (
+      event.target.value === '' ||
+      event.target.value < 0 ||
+      event.target.value > 59
+    ) {
+      secondsSpan.innerHTML = '00'
+    } else if (event.target.value < 10) {
+      secondsSpan.innerHTML = '0' + event.target.value
+    } else {
+      secondsSpan.innerHTML = event.target.value
+    }
   }
 
   let intervalID = ''
@@ -62,6 +80,8 @@ export default function ModalArbeitsschritte({
       seconds.innerHTML = '00'
       minutes.innerHTML = '00'
       startButton.innerHTML = 'Start'
+      document.getElementById('inputMinutes').value = ''
+      document.getElementById('inputSeconds').value = ''
     }
   }
   function countSeconds() {
@@ -112,13 +132,18 @@ export default function ModalArbeitsschritte({
             {showTimer ? (
               <Grid>
                 <Input
+                  id="inputMinutes"
                   type="number"
                   placeholder="Minuten"
+                  min="0"
                   onChange={(event) => setMinutes(event)}
                 ></Input>
                 <Input
+                  id="inputSeconds"
                   type="number"
                   placeholder="Sekunden"
+                  min="0"
+                  max="59"
                   onChange={(event) => setSeconds(event)}
                 ></Input>
                 <Timer>
@@ -209,6 +234,7 @@ const Grid = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   justify-items: center;
+  margin-top: 10px;
 `
 const Button = styled.div`
   width: 150px;
